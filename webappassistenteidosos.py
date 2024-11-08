@@ -1,12 +1,13 @@
 import streamlit as st
 import urllib.parse
-import datetime
 
-# Lista de contatos com nomes e números de telefone
+# Lista de contatos com nomes e números de telefone (incluindo membros da família para emergências)
 contatos = {
     "Ingred": "+5511944701187",
     "Gabriel": "+5511945329796",
-    "Pedro": "+5511950815157"
+    "Pedro": "+5511950815157",
+    "Mãe": "+5511945432145",  # Exemplo de um contato de emergência
+    "Pai": "+5511945323456"
 }
 
 # Lista para armazenar os horários dos remédios
@@ -102,38 +103,6 @@ def ligar_contato_whatsapp():
         st.markdown(f"[Clique aqui para ligar pelo WhatsApp]({whatsapp_url})", unsafe_allow_html=True)
         st.success(f"Você será redirecionado para o WhatsApp para ligar para {contato_selecionado.split(' (')[0]}.")
 
-# Função para enviar uma mensagem via WhatsApp
-def enviar_mensagem_whatsapp():
-    st.subheader("💬 Enviar Mensagem via WhatsApp")
-    contato_selecionado = st.selectbox("Escolha o contato para enviar a mensagem:", [f"{nome} ({numero})" for nome, numero in contatos.items()])
-    
-    # Extrair o número do contato selecionado
-    contato_numero = contatos[contato_selecionado.split(' (')[0]]
-    
-    mensagem = st.text_area("Digite a mensagem que deseja enviar:")
-    
-    if st.button("Enviar Mensagem", key="send_message"):
-        if mensagem:
-            # Codificar a mensagem para URL
-            mensagem_codificada = urllib.parse.quote(mensagem)
-            whatsapp_url = f"https://wa.me/{contato_numero}?text={mensagem_codificada}"
-            st.markdown(f"[Clique aqui para enviar a mensagem pelo WhatsApp]({whatsapp_url})", unsafe_allow_html=True)
-            st.success(f"A mensagem foi enviada para {contato_selecionado.split(' (')[0]}.")
-        else:
-            st.error("Por favor, digite uma mensagem antes de enviar.")
-
-# Função para navegar na internet
-def navegar_internet():
-    st.subheader("🌐 Navegar na Internet")
-    url = st.text_input("Digite o site que deseja visitar (ex: www.google.com):")
-    
-    if st.button("Navegar", key="navigate"):
-        if url:
-            st.success(f"Abrindo o site {url}...")
-            st.markdown(f"[Clique aqui para acessar {url}](http://{url})", unsafe_allow_html=True)
-        else:
-            st.error("Por favor, insira um URL válido.")
-
 # Função para registrar os horários de remédios
 def registrar_horarios_remedios():
     st.subheader("💊 Registre os Horários de Remédios")
@@ -158,6 +127,33 @@ def registrar_horarios_remedios():
         for item in horarios_remedios:
             st.write(f"**{item['remedio']}** - {item['horario']}")
 
+# Função para acionar membro da família em caso de mal-estar
+def acionar_familia_emergencia():
+    st.subheader("🚨 Acionar Família em Caso de Emergência")
+
+    # Opções de sintomas
+    sintoma = st.selectbox("Selecione o sintoma:", ["Dor", "Enjoo", "Tontura", "Mal-estar"])
+
+    # Escolher o membro da família a ser acionado
+    contato_familia = st.selectbox("Escolha o membro da família para acionar:", 
+                                   [f"{nome} ({numero})" for nome, numero in contatos.items() if nome != "Mãe" and nome != "Pai"])
+
+    # Confirmar acionamento
+    if st.button("Acionar Membro da Família"):
+        if sintoma and contato_familia:
+            nome_familia = contato_familia.split(' (')[0]
+            numero_familia = contatos[contato_familia.split(' (')[0]]
+            mensagem = f"URGENTE: O idoso está com {sintoma}. Favor verificar."
+            
+            # Codificar a mensagem para URL
+            mensagem_codificada = urllib.parse.quote(mensagem)
+            whatsapp_url = f"https://wa.me/{numero_familia}?text={mensagem_codificada}"
+            
+            st.markdown(f"[Clique aqui para acionar {nome_familia} pelo WhatsApp]({whatsapp_url})", unsafe_allow_html=True)
+            st.success(f"A mensagem foi enviada para {nome_familia}.")
+        else:
+            st.error("Por favor, selecione um sintoma e um membro da família.")
+
 # Função principal que controla a navegação
 def main():
     # Adicionando o CSS personalizado
@@ -171,21 +167,21 @@ def main():
     with col1:
         opcao = st.selectbox("O que você gostaria de fazer?", 
                              ["Ligar para um Contato via WhatsApp", 
-                              "Enviar uma Mensagem via WhatsApp", 
+                              "Registrar Horários de Remédios", 
                               "Navegar na Internet", 
-                              "Registrar Horários de Remédios"])
+                              "Acionar Família em Caso de Emergência"])
     with col2:
         st.image("https://via.placeholder.com/150.png?text=Icon", use_column_width=True)
     
     # Chamar a função correta com base na escolha do usuário
     if opcao == "Ligar para um Contato via WhatsApp":
         ligar_contato_whatsapp()
-    elif opcao == "Enviar uma Mensagem via WhatsApp":
-        enviar_mensagem_whatsapp()
-    elif opcao == "Navegar na Internet":
-        navegar_internet()
     elif opcao == "Registrar Horários de Remédios":
         registrar_horarios_remedios()
+    elif opcao == "Navegar na Internet":
+        navegar_internet()
+    elif opcao == "Acionar Família em Caso de Emergência":
+        acionar_familia_emergencia()
 
 # Execução do aplicativo
 if __name__ == '__main__':
