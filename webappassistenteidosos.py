@@ -11,67 +11,83 @@ contatos = {
 # Função para a tela de boas-vindas
 def tela_boas_vindas():
     st.title("Assistente para Idosos")
-    st.write("Bem-vindo! Escolha uma das opções abaixo.")
+    st.image("https://via.placeholder.com/800x200.png?text=Bem-vindo+ao+Assistente", use_column_width=True)
+    st.write(
+        """
+        Olá! Este é o Assistente para Idosos, um aplicativo criado para ajudar você a se conectar com seus amigos e familiares de forma fácil e rápida. 
+        Escolha uma das opções abaixo e siga as instruções para realizar a ação desejada.
+        """
+    )
 
 # Função para ligar para um contato via WhatsApp
 def ligar_contato_whatsapp():
-    st.subheader("Ligar para um Contato via WhatsApp")
-    contato_selecionado = st.selectbox("Selecione um contato:", [f"{nome} ({numero})" for nome, numero in contatos.items()])
+    st.subheader("📞 Ligar para um Contato via WhatsApp")
+    contato_selecionado = st.selectbox("Selecione um contato para ligar:", [f"{nome} ({numero})" for nome, numero in contatos.items()])
     
     # Extrair o número do contato selecionado
-    contato_numero = contatos[contato_selecionado.split(' (')[0]]  # Pega apenas o nome antes de ' ('
+    contato_numero = contatos[contato_selecionado.split(' (')[0]]
     
-    if st.button("Ligar pelo WhatsApp"):
+    if st.button("Ligar pelo WhatsApp", key="call"):
         whatsapp_url = f"https://wa.me/{contato_numero}"
-        st.markdown(f"[Clique aqui para ligar pelo WhatsApp]({whatsapp_url})")
+        st.markdown(f"[Clique aqui para ligar pelo WhatsApp]({whatsapp_url})", unsafe_allow_html=True)
+        st.success(f"Você será redirecionado para o WhatsApp para ligar para {contato_selecionado.split(' (')[0]}.")
 
 # Função para enviar uma mensagem via WhatsApp
 def enviar_mensagem_whatsapp():
-    st.subheader("Enviar Mensagem via WhatsApp")
-    contato_selecionado = st.selectbox("Selecione um contato para enviar mensagem:", [f"{nome} ({numero})" for nome, numero in contatos.items()])
+    st.subheader("💬 Enviar Mensagem via WhatsApp")
+    contato_selecionado = st.selectbox("Escolha o contato para enviar a mensagem:", [f"{nome} ({numero})" for nome, numero in contatos.items()])
     
     # Extrair o número do contato selecionado
-    contato_numero = contatos[contato_selecionado.split(' (')[0]]  # Pega apenas o nome antes de ' ('
+    contato_numero = contatos[contato_selecionado.split(' (')[0]]
     
-    mensagem = st.text_area("Digite a mensagem:")
+    mensagem = st.text_area("Digite a mensagem que deseja enviar:")
     
-    if st.button("Enviar"):
+    if st.button("Enviar Mensagem", key="send_message"):
         if mensagem:
             # Codificar a mensagem para URL
             mensagem_codificada = urllib.parse.quote(mensagem)
             whatsapp_url = f"https://wa.me/{contato_numero}?text={mensagem_codificada}"
-            st.markdown(f"[Clique aqui para enviar a mensagem pelo WhatsApp]({whatsapp_url})")
+            st.markdown(f"[Clique aqui para enviar a mensagem pelo WhatsApp]({whatsapp_url})", unsafe_allow_html=True)
+            st.success(f"A mensagem foi enviada para {contato_selecionado.split(' (')[0]}.")
         else:
             st.error("Por favor, digite uma mensagem antes de enviar.")
 
 # Função para navegar na internet
 def navegar_internet():
-    st.subheader("Navegar na Internet")
+    st.subheader("🌐 Navegar na Internet")
     url = st.text_input("Digite o site que deseja visitar (ex: www.google.com):")
-    if st.button("Navegar"):
+    
+    if st.button("Navegar", key="navigate"):
         if url:
             st.success(f"Abrindo o site {url}...")
+            st.markdown(f"[Clique aqui para acessar {url}](http://{url})", unsafe_allow_html=True)
         else:
             st.error("Por favor, insira um URL válido.")
 
 # Função para usar a câmera
 def usar_camera():
-    st.subheader("Usar a Câmera")
-    picture = st.camera_input("Tirar uma foto")
+    st.subheader("📸 Usar a Câmera")
+    picture = st.camera_input("Tire uma foto ou faça um vídeo:")
     if picture:
-        st.image(picture)
+        st.image(picture, caption="Foto Capturada!", use_column_width=True)
+        st.success("Foto tirada com sucesso!")
 
 # Função principal que controla a navegação
 def main():
-    tela_boas_vindas() 
+    # Exibição do título e da imagem de boas-vindas
+    tela_boas_vindas()
     
-    # Menu de opções
-    opcao = st.selectbox("O que você gostaria de fazer?", 
-                         ["Ligar para um Contato via WhatsApp", 
-                          "Enviar uma Mensagem via WhatsApp", 
-                          "Navegar na Internet", 
-                          "Usar a Câmera"])
-      
+    # Menu de opções organizado em um layout de 2 colunas
+    col1, col2 = st.columns(2)
+    with col1:
+        opcao = st.selectbox("O que você gostaria de fazer?", 
+                             ["Ligar para um Contato via WhatsApp", 
+                              "Enviar uma Mensagem via WhatsApp", 
+                              "Navegar na Internet", 
+                              "Usar a Câmera"])
+    with col2:
+        st.image("https://via.placeholder.com/150.png?text=Icon", use_column_width=True)
+    
     # Chamar a função correta com base na escolha do usuário
     if opcao == "Ligar para um Contato via WhatsApp":
         ligar_contato_whatsapp()
