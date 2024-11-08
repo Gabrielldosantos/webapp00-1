@@ -18,7 +18,7 @@ def enviar_email(subject, body, to_email):
     smtp_server = "smtp.gmail.com"
     smtp_port = 587
     smtp_user = "seuemail@gmail.com"  # Seu e-mail
-    smtp_password = "suasenha"  # Sua senha ou app-specific password (se necessário)
+    smtp_password = "suasenha"  # Sua senha de aplicativo ou senha normal
 
     # Criar o objeto de mensagem
     msg = MIMEMultipart()
