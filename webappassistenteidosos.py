@@ -2,12 +2,11 @@ import streamlit as st
 import smtplib
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
-import urllib.parse
 
 # Lista de contatos com nomes, e-mails e números de telefone (incluindo membros da família para emergências)
 contatos = {
     "Ingred": {"numero": "+5511944701187", "email": "ingred@exemplo.com"},
-    "Gabriel": {"numero": "+5511945329796", "email": "gabriel.838383@gmail.com"},
+    "Gabriel": {"numero": "+5511945329796", "email": "gabriel@exemplo.com"},
     "Pedro": {"numero": "+5511950815157", "email": "pedro@exemplo.com"},
     "Mãe": {"numero": "+5511945432145", "email": "mae@exemplo.com"},  # Exemplo de um contato de emergência
     "Pai": {"numero": "+5511945323456", "email": "pai@exemplo.com"}
@@ -164,20 +163,14 @@ def main():
     col1, col2 = st.columns(2)
     with col1:
         opcao = st.selectbox("O que você gostaria de fazer?", 
-                             ["Ligar para um Contato via WhatsApp", 
-                              "Registrar Horários de Remédios", 
-                              "Navegar na Internet", 
+                             ["Registrar Horários de Remédios", 
                               "Acionar Família em Caso de Emergência"])
     with col2:
         st.image("https://via.placeholder.com/150.png?text=Icon", use_column_width=True)
     
     # Chamar a função correta com base na escolha do usuário
-    if opcao == "Ligar para um Contato via WhatsApp":
-        ligar_contato_whatsapp()
-    elif opcao == "Registrar Horários de Remédios":
+    if opcao == "Registrar Horários de Remédios":
         registrar_horarios_remedios()
-    elif opcao == "Navegar na Internet":
-        navegar_internet()
     elif opcao == "Acionar Família em Caso de Emergência":
         acionar_familia_emergencia()
 
