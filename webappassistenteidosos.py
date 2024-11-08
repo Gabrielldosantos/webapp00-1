@@ -1,5 +1,6 @@
 import streamlit as st
 import urllib.parse
+import datetime
 
 # Lista de contatos com nomes e números de telefone
 contatos = {
@@ -7,6 +8,9 @@ contatos = {
     "Gabriel": "+5511945329796",
     "Pedro": "+5511950815157"
 }
+
+# Lista para armazenar os horários dos remédios
+horarios_remedios = []
 
 # Função para adicionar CSS personalizado
 def adicionar_css():
@@ -130,13 +134,29 @@ def navegar_internet():
         else:
             st.error("Por favor, insira um URL válido.")
 
-# Função para usar a câmera
-def usar_camera():
-    st.subheader("📸 Usar a Câmera")
-    picture = st.camera_input("Tire uma foto ou faça um vídeo:")
-    if picture:
-        st.image(picture, caption="Foto Capturada!", use_column_width=True)
-        st.success("Foto tirada com sucesso!")
+# Função para registrar os horários de remédios
+def registrar_horarios_remedios():
+    st.subheader("💊 Registre os Horários de Remédios")
+    
+    # Campo para o nome do remédio
+    remedio_nome = st.text_input("Nome do remédio:")
+    
+    # Campo para o horário
+    horario = st.time_input("Hora para tomar o remédio:", datetime.time(8, 0))
+    
+    if st.button("Adicionar Horário"):
+        if remedio_nome:
+            # Adicionar o remédio e horário à lista
+            horarios_remedios.append({"remedio": remedio_nome, "horario": horario.strftime("%H:%M")})
+            st.success(f"Horário para {remedio_nome} adicionado com sucesso!")
+        else:
+            st.error("Por favor, insira o nome do remédio.")
+    
+    # Exibir a lista de remédios e horários
+    if horarios_remedios:
+        st.write("### Horários dos Remédios:")
+        for item in horarios_remedios:
+            st.write(f"**{item['remedio']}** - {item['horario']}")
 
 # Função principal que controla a navegação
 def main():
@@ -153,7 +173,7 @@ def main():
                              ["Ligar para um Contato via WhatsApp", 
                               "Enviar uma Mensagem via WhatsApp", 
                               "Navegar na Internet", 
-                              "Usar a Câmera"])
+                              "Registrar Horários de Remédios"])
     with col2:
         st.image("https://via.placeholder.com/150.png?text=Icon", use_column_width=True)
     
@@ -164,8 +184,8 @@ def main():
         enviar_mensagem_whatsapp()
     elif opcao == "Navegar na Internet":
         navegar_internet()
-    elif opcao == "Usar a Câmera":
-        usar_camera()
+    elif opcao == "Registrar Horários de Remédios":
+        registrar_horarios_remedios()
 
 # Execução do aplicativo
 if __name__ == '__main__':
