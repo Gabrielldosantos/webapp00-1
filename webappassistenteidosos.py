@@ -1,6 +1,10 @@
 import streamlit as st
-import urllib.parse
+import smtplib
+import ssl
 import datetime
+import urllib.parse
+from email.mime.multipart import MIMEMultipart
+from email.mime.text import MIMEText
 
 # Lista de contatos com nomes e números de telefone (incluindo membros da família para emergências)
 contatos = {
@@ -83,6 +87,27 @@ def adicionar_css():
     </style>
     """, unsafe_allow_html=True)
 
+# Função para enviar e-mail
+def enviar_email(destinatario, assunto, corpo):
+    sender_email = "gabriel.838383@gmail.com"
+    receiver_email = destinatario
+    password = "sua_senha"
+
+    msg = MIMEMultipart()
+    msg['From'] = sender_email
+    msg['To'] = receiver_email
+    msg['Subject'] = assunto
+    msg.attach(MIMEText(corpo, 'plain'))
+
+    context = ssl.create_default_context()
+    try:
+        with smtplib.SMTP_SSL("smtp.gmail.com", 465, context=context) as server:
+            server.login(sender_email, password)
+            server.sendmail(sender_email, receiver_email, msg.as_string())
+            st.success(f"E-mail enviado com sucesso para {destinatario}.")
+    except Exception as e:
+        st.error(f"Erro ao enviar e-mail: {str(e)}")
+
 # Função para a tela de boas-vindas
 def tela_boas_vindas():
     st.title("Assistente para Idosos")
@@ -93,19 +118,6 @@ def tela_boas_vindas():
         Escolha uma das opções abaixo e siga as instruções para realizar a ação desejada.
         """
     )
-
-# Função para ligar para um contato via WhatsApp
-def ligar_contato_whatsapp():
-    st.subheader("📞 Ligar para um Contato via WhatsApp")
-    contato_selecionado = st.selectbox("Selecione um contato para ligar:", [f"{nome} ({numero})" for nome, numero in contatos.items()])
-
-    # Extrair o número do contato selecionado
-    contato_numero = contatos[contato_selecionado.split(' (')[0]]
-
-    if st.button("Ligar pelo WhatsApp"):
-        whatsapp_url = f"https://wa.me/{contato_numero}"
-        st.markdown(f"[Clique aqui para ligar pelo WhatsApp]({whatsapp_url})", unsafe_allow_html=True)
-        st.success(f"Você será redirecionado para o WhatsApp para ligar para {contato_selecionado.split(' (')[0]}.")
 
 # Função para registrar os horários de remédios
 def registrar_horarios_remedios():
@@ -131,7 +143,7 @@ def registrar_horarios_remedios():
         for item in horarios_remedios:
             st.write(f"**{item['remedio']}** - {item['horario']}")
 
-# Função para acionar membro da família em caso de mal-estar
+# Função para acionar membro da família em caso de mal-estar e enviar e-mail
 def acionar_familia_emergencia():
     st.subheader("🚨 Acionar Família em Caso de Emergência")
 
@@ -146,15 +158,11 @@ def acionar_familia_emergencia():
     if st.button("Acionar Membro da Família"):
         if sintoma and contato_familia:
             nome_familia = contato_familia.split(' (')[0]
-            numero_familia = contatos[contato_familia.split(' (')[0]]
+            email_familia = "email_do_familia@example.com"  # Substitua com o e-mail do membro da família
             mensagem = f"URGENTE: O idoso está com {sintoma}. Favor verificar."
 
-            # Codificar a mensagem para URL
-            mensagem_codificada = urllib.parse.quote(mensagem)
-            whatsapp_url = f"https://wa.me/{numero_familia}?text={mensagem_codificada}"
-
-            st.markdown(f"[Clique aqui para acionar {nome_familia} pelo WhatsApp]({whatsapp_url})", unsafe_allow_html=True)
-            st.success(f"A mensagem foi enviada para {nome_familia}.")
+            # Enviar e-mail
+            enviar_email(email_familia, f"Sintoma de {sintoma} detectado", mensagem)
         else:
             st.error("Por favor, selecione um sintoma e um membro da família.")
 
@@ -178,7 +186,8 @@ def main():
 
     # Chamar a função correta com base na escolha do usuário
     if opcao == "Ligar para um Contato via WhatsApp":
-        ligar_contato_whatsapp()
+        # Aqui você pode adicionar a lógica de WhatsApp novamente, se desejar
+        pass
     elif opcao == "Registrar Horários de Remédios":
         registrar_horarios_remedios()
     elif opcao == "Acionar Família em Caso de Emergência":
