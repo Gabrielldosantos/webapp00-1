@@ -6,11 +6,14 @@ from email.mime.multipart import MIMEMultipart
 # Lista de contatos com nomes, e-mails e números de telefone (incluindo membros da família para emergências)
 contatos = {
     "Ingred": {"numero": "+5511944701187", "email": "ingred@exemplo.com"},
-    "Gabriel": {"numero": "+5511945329796", "email": "gabriel.838383@gmail.com"},
+    "Gabriel": {"numero": "+5511945329796", "email": "gabriel@exemplo.com"},
     "Pedro": {"numero": "+5511950815157", "email": "pedro@exemplo.com"},
     "Mãe": {"numero": "+5511945432145", "email": "mae@exemplo.com"},  # Exemplo de um contato de emergência
     "Pai": {"numero": "+5511945323456", "email": "pai@exemplo.com"}
 }
+
+# Lista para armazenar os horários dos remédios
+horarios_remedios = []
 
 # Função para enviar um e-mail
 def enviar_email(subject, body, to_email):
@@ -18,7 +21,7 @@ def enviar_email(subject, body, to_email):
     smtp_server = "smtp.gmail.com"
     smtp_port = 587
     smtp_user = "seuemail@gmail.com"  # Seu e-mail
-    smtp_password = "suasenha"  # Sua senha de aplicativo ou senha normal
+    smtp_password = "suasenha"  # Sua senha ou app-specific password (se necessário)
 
     # Criar o objeto de mensagem
     msg = MIMEMultipart()
@@ -39,7 +42,7 @@ def enviar_email(subject, body, to_email):
         server.quit()  # Fechar a conexão com o servidor SMTP
         return True
     except Exception as e:
-        st.error(f"Erro ao enviar e-mail: {e}")
+        print(f"Erro ao enviar e-mail: {e}")
         return False
 
 # Função para adicionar CSS personalizado
@@ -167,7 +170,7 @@ def main():
     
     # Chamar a função correta com base na escolha do usuário
     if opcao == "Registrar Horários de Remédios":
-        st.write("Função para registrar horários de remédios será implementada em breve.")
+        registrar_horarios_remedios()
     elif opcao == "Acionar Família em Caso de Emergência":
         acionar_familia_emergencia()
 
