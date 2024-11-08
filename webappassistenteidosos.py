@@ -20,7 +20,7 @@ def adicionar_css():
     <style>
         /* Cor de fundo do aplicativo */
         .reportview-container {
-            background-color: rgba(255, 255, 255, 0.7);  /* Fundo translúcido para melhorar contraste */
+            background-color: #eaf4e5;  /* Fundo verde suave */
         }
 
         /* Título da página */
@@ -71,18 +71,14 @@ def adicionar_css():
             font-size: 16px;
         }
 
-        /* Estilo para a imagem */
+        /* Cor de fundo principal */
         .stApp {
-            background-image: url("https://images.unsplash.com/photo-1592205787671-4417b2ca9ee1?crop=entropy&cs=tinysrgb&fit=max&ixid=MnwzNjEyOXwwfDF8c2VhY2h8OXx8bmljZSUyMGxhbmRzY2FwZXxlbnwwfHx8fDE2ODU4Mjg2NTI&ixlib=rb-1.2.1&q=80&w=1500"); /* Paisagem de campo ou parque */
-            background-size: cover;
-            background-position: center;
-            background-repeat: no-repeat;
-            height: 100vh;
+            background-color: #c1e2c1;  /* Fundo verde claro */
         }
 
         /* Adicionando uma camada de escurecimento para garantir que o texto fique legível */
         .reportview-container {
-            background-color: rgba(255, 255, 255, 0.8);  /* Fundo semi-transparente */
+            background-color: rgba(255, 255, 255, 0.9);  /* Fundo translúcido claro */
         }
     </style>
     """, unsafe_allow_html=True)
