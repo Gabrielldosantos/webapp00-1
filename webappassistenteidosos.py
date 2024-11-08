@@ -20,30 +20,30 @@ def adicionar_css():
     <style>
         /* Cor de fundo do aplicativo */
         .reportview-container {
-            background-color: #f4f4f9;  /* Cor de fundo do corpo */
+            background-color: #f9f9f9;  /* Fundo mais suave e claro */
         }
 
         /* Título da página */
         h1 {
-            color: #1f4f6b;  /* Cor do título */
+            color: #2c3e50;  /* Cor do título */
             font-family: 'Arial', sans-serif;
         }
 
         /* Subtítulos */
         h2 {
-            color: #3e7b8e;  /* Cor dos subtítulos */
+            color: #3498db;  /* Cor dos subtítulos */
             font-family: 'Arial', sans-serif;
         }
 
         /* Texto normal */
         .markdown-text-container {
-            color: #333333;  /* Cor do texto */
+            color: #555555;  /* Cor do texto */
             font-family: 'Arial', sans-serif;
         }
 
         /* Cor dos botões */
         .stButton>button {
-            background-color: #0066cc;
+            background-color: #2980b9;  /* Cor do botão */
             color: white;
             font-size: 16px;
             border-radius: 10px;
@@ -52,7 +52,7 @@ def adicionar_css():
 
         /* Efeito de hover no botão */
         .stButton>button:hover {
-            background-color: #0057a0;
+            background-color: #1c5980;
         }
 
         /* Adicionando uma borda arredondada nos campos de entrada de texto */
@@ -71,9 +71,9 @@ def adicionar_css():
             font-size: 16px;
         }
 
-        /* Imagem de fundo da tela */
+        /* Estilo para a imagem */
         .stApp {
-            background-image: url("https://via.placeholder.com/1500x1000.png?text=Background+Image");
+            background-color: #ecf0f1;  /* Fundo mais limpo, sem imagem, e mais suave */
             background-size: cover;
             background-position: center;
         }
