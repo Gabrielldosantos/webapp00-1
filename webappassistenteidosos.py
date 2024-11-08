@@ -3,16 +3,15 @@ import urllib.parse
 
 # Lista de contatos com nomes e números de telefone
 contatos = {
-    "Massaki": "+5511999999999",
     "Ingred": "+5511944701187",
-    "Gabriel": "+5511977777777",
+    "Gabriel": "+5511945329796",
     "Pedro": "+5511950815157"
 }
 
 # Função para a tela de boas-vindas
 def tela_boas_vindas():
     st.title("Assistente para Idosos")
-    st.write("Bem-vindo! Escolha uma das opções abaixo para começar.")
+    st.write("Bem-vindo! Escolha uma das opções abaixo.")
 
 # Função para ligar para um contato via WhatsApp
 def ligar_contato_whatsapp():
