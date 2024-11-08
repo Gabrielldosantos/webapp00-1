@@ -8,6 +8,72 @@ contatos = {
     "Pedro": "+5511950815157"
 }
 
+# Função para adicionar CSS personalizado
+def adicionar_css():
+    st.markdown("""
+    <style>
+        /* Cor de fundo do aplicativo */
+        .reportview-container {
+            background-color: #f4f4f9;  /* Cor de fundo do corpo */
+        }
+
+        /* Título da página */
+        h1 {
+            color: #1f4f6b;  /* Cor do título */
+            font-family: 'Arial', sans-serif;
+        }
+
+        /* Subtítulos */
+        h2 {
+            color: #3e7b8e;  /* Cor dos subtítulos */
+            font-family: 'Arial', sans-serif;
+        }
+
+        /* Texto normal */
+        .markdown-text-container {
+            color: #333333;  /* Cor do texto */
+            font-family: 'Arial', sans-serif;
+        }
+
+        /* Cor dos botões */
+        .stButton>button {
+            background-color: #0066cc;
+            color: white;
+            font-size: 16px;
+            border-radius: 10px;
+            padding: 10px 20px;
+        }
+
+        /* Efeito de hover no botão */
+        .stButton>button:hover {
+            background-color: #0057a0;
+        }
+
+        /* Adicionando uma borda arredondada nos campos de entrada de texto */
+        .stTextInput>div>input, .stTextArea>div>textarea {
+            border-radius: 5px;
+            border: 2px solid #ddd;
+            padding: 10px;
+            font-size: 16px;
+        }
+
+        /* Estilo para o Selectbox */
+        .stSelectbox>div>select {
+            border-radius: 5px;
+            border: 2px solid #ddd;
+            padding: 10px;
+            font-size: 16px;
+        }
+
+        /* Imagem de fundo da tela */
+        .stApp {
+            background-image: url("https://via.placeholder.com/1500x1000.png?text=Background+Image");
+            background-size: cover;
+            background-position: center;
+        }
+    </style>
+    """, unsafe_allow_html=True)
+
 # Função para a tela de boas-vindas
 def tela_boas_vindas():
     st.title("Assistente para Idosos")
@@ -74,6 +140,9 @@ def usar_camera():
 
 # Função principal que controla a navegação
 def main():
+    # Adicionando o CSS personalizado
+    adicionar_css()
+    
     # Exibição do título e da imagem de boas-vindas
     tela_boas_vindas()
     
