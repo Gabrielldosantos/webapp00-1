@@ -1,17 +1,50 @@
 import streamlit as st
+import smtplib
+from email.mime.text import MIMEText
+from email.mime.multipart import MIMEMultipart
 import urllib.parse
 
-# Lista de contatos com nomes e números de telefone (incluindo membros da família para emergências)
+# Lista de contatos com nomes, e-mails e números de telefone (incluindo membros da família para emergências)
 contatos = {
-    "Ingred": "+5511944701187",
-    "Gabriel": "+5511945329796",
-    "Pedro": "+5511950815157",
-    "Mãe": "+5511945432145",  # Exemplo de um contato de emergência
-    "Pai": "+5511945323456"
+    "Ingred": {"numero": "+5511944701187", "email": "ingred@exemplo.com"},
+    "Gabriel": {"numero": "+5511945329796", "email": "gabriel.838383@gmail.com"},
+    "Pedro": {"numero": "+5511950815157", "email": "pedro@exemplo.com"},
+    "Mãe": {"numero": "+5511945432145", "email": "mae@exemplo.com"},  # Exemplo de um contato de emergência
+    "Pai": {"numero": "+5511945323456", "email": "pai@exemplo.com"}
 }
 
 # Lista para armazenar os horários dos remédios
 horarios_remedios = []
+
+# Função para enviar um e-mail
+def enviar_email(subject, body, to_email):
+    # Credenciais do servidor SMTP (Exemplo usando Gmail)
+    smtp_server = "smtp.gmail.com"
+    smtp_port = 587
+    smtp_user = "seuemail@gmail.com"  # Seu e-mail
+    smtp_password = "suasenha"  # Sua senha ou app-specific password (se necessário)
+
+    # Criar o objeto de mensagem
+    msg = MIMEMultipart()
+    msg['From'] = smtp_user
+    msg['To'] = to_email
+    msg['Subject'] = subject
+    
+    # Adicionar o corpo do e-mail
+    msg.attach(MIMEText(body, 'plain'))
+
+    try:
+        # Conectar ao servidor SMTP
+        server = smtplib.SMTP(smtp_server, smtp_port)
+        server.starttls()  # Criptografar a conexão
+        server.login(smtp_user, smtp_password)  # Login no servidor de e-mail
+        text = msg.as_string()
+        server.sendmail(smtp_user, to_email, text)  # Enviar o e-mail
+        server.quit()  # Fechar a conexão com o servidor SMTP
+        return True
+    except Exception as e:
+        print(f"Erro ao enviar e-mail: {e}")
+        return False
 
 # Função para adicionar CSS personalizado
 def adicionar_css():
@@ -90,43 +123,6 @@ def tela_boas_vindas():
         """
     )
 
-# Função para ligar para um contato via WhatsApp
-def ligar_contato_whatsapp():
-    st.subheader("📞 Ligar para um Contato via WhatsApp")
-    contato_selecionado = st.selectbox("Selecione um contato para ligar:", [f"{nome} ({numero})" for nome, numero in contatos.items()])
-    
-    # Extrair o número do contato selecionado
-    contato_numero = contatos[contato_selecionado.split(' (')[0]]
-    
-    if st.button("Ligar pelo WhatsApp", key="call"):
-        whatsapp_url = f"https://wa.me/{contato_numero}"
-        st.markdown(f"[Clique aqui para ligar pelo WhatsApp]({whatsapp_url})", unsafe_allow_html=True)
-        st.success(f"Você será redirecionado para o WhatsApp para ligar para {contato_selecionado.split(' (')[0]}.")
-
-# Função para registrar os horários de remédios
-def registrar_horarios_remedios():
-    st.subheader("💊 Registre os Horários de Remédios")
-    
-    # Campo para o nome do remédio
-    remedio_nome = st.text_input("Nome do remédio:")
-    
-    # Campo para o horário
-    horario = st.time_input("Hora para tomar o remédio:", datetime.time(8, 0))
-    
-    if st.button("Adicionar Horário"):
-        if remedio_nome:
-            # Adicionar o remédio e horário à lista
-            horarios_remedios.append({"remedio": remedio_nome, "horario": horario.strftime("%H:%M")})
-            st.success(f"Horário para {remedio_nome} adicionado com sucesso!")
-        else:
-            st.error("Por favor, insira o nome do remédio.")
-    
-    # Exibir a lista de remédios e horários
-    if horarios_remedios:
-        st.write("### Horários dos Remédios:")
-        for item in horarios_remedios:
-            st.write(f"**{item['remedio']}** - {item['horario']}")
-
 # Função para acionar membro da família em caso de mal-estar
 def acionar_familia_emergencia():
     st.subheader("🚨 Acionar Família em Caso de Emergência")
@@ -136,21 +132,23 @@ def acionar_familia_emergencia():
 
     # Escolher o membro da família a ser acionado
     contato_familia = st.selectbox("Escolha o membro da família para acionar:", 
-                                   [f"{nome} ({numero})" for nome, numero in contatos.items() if nome != "Mãe" and nome != "Pai"])
+                                   [f"{nome} ({contatos[nome]['email']})" for nome in contatos if nome != "Mãe" and nome != "Pai"])
 
     # Confirmar acionamento
     if st.button("Acionar Membro da Família"):
         if sintoma and contato_familia:
             nome_familia = contato_familia.split(' (')[0]
-            numero_familia = contatos[contato_familia.split(' (')[0]]
+            email_familia = contatos[nome_familia]["email"]
             mensagem = f"URGENTE: O idoso está com {sintoma}. Favor verificar."
             
-            # Codificar a mensagem para URL
-            mensagem_codificada = urllib.parse.quote(mensagem)
-            whatsapp_url = f"https://wa.me/{numero_familia}?text={mensagem_codificada}"
+            # Enviar o e-mail de emergência
+            assunto = f"Emergência - Sintoma de {sintoma} do Idoso"
+            sucesso = enviar_email(assunto, mensagem, email_familia)
             
-            st.markdown(f"[Clique aqui para acionar {nome_familia} pelo WhatsApp]({whatsapp_url})", unsafe_allow_html=True)
-            st.success(f"A mensagem foi enviada para {nome_familia}.")
+            if sucesso:
+                st.success(f"A mensagem de emergência foi enviada para {nome_familia}!")
+            else:
+                st.error("Ocorreu um erro ao enviar a mensagem de emergência.")
         else:
             st.error("Por favor, selecione um sintoma e um membro da família.")
 
