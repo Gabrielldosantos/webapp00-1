@@ -1,6 +1,6 @@
-
 import streamlit as st
 import urllib.parse
+import datetime
 
 # Lista de contatos com nomes e números de telefone (incluindo membros da família para emergências)
 contatos = {
@@ -95,11 +95,11 @@ def tela_boas_vindas():
 def ligar_contato_whatsapp():
     st.subheader("📞 Ligar para um Contato via WhatsApp")
     contato_selecionado = st.selectbox("Selecione um contato para ligar:", [f"{nome} ({numero})" for nome, numero in contatos.items()])
-    
+
     # Extrair o número do contato selecionado
     contato_numero = contatos[contato_selecionado.split(' (')[0]]
-    
-    if st.button("Ligar pelo WhatsApp", key="call"):
+
+    if st.button("Ligar pelo WhatsApp"):
         whatsapp_url = f"https://wa.me/{contato_numero}"
         st.markdown(f"[Clique aqui para ligar pelo WhatsApp]({whatsapp_url})", unsafe_allow_html=True)
         st.success(f"Você será redirecionado para o WhatsApp para ligar para {contato_selecionado.split(' (')[0]}.")
@@ -107,13 +107,13 @@ def ligar_contato_whatsapp():
 # Função para registrar os horários de remédios
 def registrar_horarios_remedios():
     st.subheader("💊 Registre os Horários de Remédios")
-    
+
     # Campo para o nome do remédio
     remedio_nome = st.text_input("Nome do remédio:")
-    
+
     # Campo para o horário
     horario = st.time_input("Hora para tomar o remédio:", datetime.time(8, 0))
-    
+
     if st.button("Adicionar Horário"):
         if remedio_nome:
             # Adicionar o remédio e horário à lista
@@ -121,7 +121,7 @@ def registrar_horarios_remedios():
             st.success(f"Horário para {remedio_nome} adicionado com sucesso!")
         else:
             st.error("Por favor, insira o nome do remédio.")
-    
+
     # Exibir a lista de remédios e horários
     if horarios_remedios:
         st.write("### Horários dos Remédios:")
@@ -136,7 +136,7 @@ def acionar_familia_emergencia():
     sintoma = st.selectbox("Selecione o sintoma:", ["Dor", "Enjoo", "Tontura", "Mal-estar"])
 
     # Escolher o membro da família a ser acionado
-    contato_familia = st.selectbox("Escolha o membro da família para acionar:", 
+    contato_familia = st.selectbox("Escolha o membro da família para acionar:",
                                    [f"{nome} ({numero})" for nome, numero in contatos.items() if nome != "Mãe" and nome != "Pai"])
 
     # Confirmar acionamento
@@ -145,11 +145,11 @@ def acionar_familia_emergencia():
             nome_familia = contato_familia.split(' (')[0]
             numero_familia = contatos[contato_familia.split(' (')[0]]
             mensagem = f"URGENTE: O idoso está com {sintoma}. Favor verificar."
-            
+
             # Codificar a mensagem para URL
             mensagem_codificada = urllib.parse.quote(mensagem)
             whatsapp_url = f"https://wa.me/{numero_familia}?text={mensagem_codificada}"
-            
+
             st.markdown(f"[Clique aqui para acionar {nome_familia} pelo WhatsApp]({whatsapp_url})", unsafe_allow_html=True)
             st.success(f"A mensagem foi enviada para {nome_familia}.")
         else:
@@ -159,28 +159,25 @@ def acionar_familia_emergencia():
 def main():
     # Adicionando o CSS personalizado
     adicionar_css()
-    
+
     # Exibição do título e da imagem de boas-vindas
     tela_boas_vindas()
-    
+
     # Menu de opções organizado em um layout de 2 colunas
     col1, col2 = st.columns(2)
     with col1:
-        opcao = st.selectbox("O que você gostaria de fazer?", 
-                             ["Ligar para um Contato via WhatsApp", 
-                              "Registrar Horários de Remédios", 
-                              "Navegar na Internet", 
+        opcao = st.selectbox("O que você gostaria de fazer?",
+                             ["Ligar para um Contato via WhatsApp",
+                              "Registrar Horários de Remédios",
                               "Acionar Família em Caso de Emergência"])
     with col2:
         st.image("https://via.placeholder.com/150.png?text=Icon", use_column_width=True)
-    
+
     # Chamar a função correta com base na escolha do usuário
     if opcao == "Ligar para um Contato via WhatsApp":
         ligar_contato_whatsapp()
     elif opcao == "Registrar Horários de Remédios":
         registrar_horarios_remedios()
-    elif opcao == "Navegar na Internet":
-        navegar_internet()
     elif opcao == "Acionar Família em Caso de Emergência":
         acionar_familia_emergencia()
 
