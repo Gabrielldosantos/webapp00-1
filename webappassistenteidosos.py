@@ -1,22 +1,6 @@
 import streamlit as st
 import time
-import pygame
 from random import shuffle
-
-# Inicializar o pygame para música de fundo
-pygame.mixer.init()
-
-# Função para tocar música de fundo
-def tocar_musica():
-    try:
-        pygame.mixer.music.load("background_music.mp3")  # Coloque o caminho para a música
-        pygame.mixer.music.play(-1)  # Reproduzir a música em loop
-    except:
-        st.warning("Não foi possível carregar a música de fundo.")
-
-# Função para parar a música
-def parar_musica():
-    pygame.mixer.music.stop()
 
 # Definir as 10 perguntas e respostas
 perguntas = [
@@ -84,8 +68,8 @@ def animacao_resposta(feedback):
 
 # Função principal do Streamlit
 def app():
-    # Iniciar a música
-    tocar_musica()
+    # Adicionar música de fundo
+    st.audio("background_music.mp3", format="audio/mp3", start_time=0)
 
     # Título e introdução
     st.title("Quiz Animado")
@@ -137,8 +121,6 @@ def app():
 
     # Se já tiver terminado o quiz, exibir o resultado
     if st.session_state.pergunta_atual == len(perguntas):
-        parar_musica()  # Parar a música ao final
-
         st.write("Quiz Concluído!")
         st.write(f"Você acertou {st.session_state.pontuacao} de {len(perguntas)} perguntas!")
 
