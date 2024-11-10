@@ -95,13 +95,14 @@ def app():
                 if opcao == pergunta["resposta_correta"]:
                     st.session_state.pontuacao += 1
 
-                # Controlar se a pergunta foi respondida
+                # Marcar que a pergunta foi respondida
                 st.session_state.respondido = True
-                st.session_state.pergunta_atual += 1  # Avançar para a próxima pergunta imediatamente
 
-                # Pausar brevemente antes de avançar para a próxima pergunta
-                st.session_state.respondido = False  # Resetar o controle de pergunta respondida
-                break  # Evitar múltiplos cliques
+                # Botão para ir para a próxima pergunta
+                if st.session_state.respondido:
+                    st.session_state.respondido = False  # Resetar o controle de pergunta respondida
+                    st.session_state.pergunta_atual += 1  # Avançar para a próxima pergunta
+                    break  # Evitar múltiplos cliques na mesma pergunta
 
     # Se já tiver terminado o quiz, exibir o resultado
     if st.session_state.pergunta_atual == len(perguntas):
