@@ -1,6 +1,4 @@
 import streamlit as st
-import random
-import matplotlib.pyplot as plt
 
 # Definir as perguntas de lógica de programação
 perguntas = [
@@ -60,24 +58,11 @@ perguntas = [
 def animacao_pergunta(titulo):
     st.markdown(f"<h1 style='text-align: center; font-size: 3em; color: #FF6347; font-weight: bold;'>{titulo}</h1>", unsafe_allow_html=True)
 
-# Função para exibir gráfico de desempenho
-def exibir_grafico():
-    acertos = [1 if resposta["resposta_usuario"] == resposta["resposta_correta"] else 0 for resposta in st.session_state.respostas_usuario]
-    fig, ax = plt.subplots()
-    ax.plot(range(1, len(acertos) + 1), acertos, marker='o', linestyle='-', color='b')
-    ax.set_title("Desempenho nas Perguntas")
-    ax.set_xlabel("Pergunta")
-    ax.set_ylabel("Acertos")
-    st.pyplot(fig)
-
 # Função principal do Streamlit
 def app():
     # Título e introdução
     st.title("Quiz de Lógica de Programação")
     st.write("Responda as perguntas sobre lógica de programação e veja seu desempenho! Boa sorte! 🎉")
-
-    # Embaralhar perguntas para que fiquem em ordem aleatória
-    random.shuffle(perguntas)
 
     # Inicializar o estado de sessão
     if 'respostas_usuario' not in st.session_state:
@@ -86,33 +71,19 @@ def app():
         st.session_state.pontuacao = 0
         st.session_state.respondido = False  # Controla se a pergunta já foi respondida
 
-    # Barra de progresso
-    st.progress(st.session_state.pergunta_atual / len(perguntas))
-
-    # Botões de "Seguir" e "Voltar"
-    col1, col2 = st.columns([1, 10])
-    with col1:
-        if st.button("Voltar", disabled=st.session_state.pergunta_atual == 0):
-            if st.session_state.pergunta_atual > 0:
-                st.session_state.pergunta_atual -= 1
-
-    with col2:
-        if st.button("Seguir", disabled=st.session_state.pergunta_atual == len(perguntas)):
-            if st.session_state.pergunta_atual < len(perguntas):
-                st.session_state.pergunta_atual += 1
-
     # Exibir uma pergunta por vez
     pergunta_atual = st.session_state.pergunta_atual
 
+    # Verificar se a pergunta_atual não excede o número de perguntas
     if pergunta_atual < len(perguntas):
         pergunta = perguntas[pergunta_atual]
 
         # Exibir animação no título
         animacao_pergunta(pergunta["pergunta"])
 
-        # Mostrar as opções de resposta como botões
+        # Mostrar as opções de resposta como botões quadrados/retangulares
         for opcao in pergunta["respostas"]:
-            if st.button(opcao, key=f"resposta_{pergunta_atual}_{opcao}", disabled=st.session_state.respondido):
+            if st.button(opcao, key=f"resposta_{pergunta_atual}_{opcao}"):
                 # Armazenar a resposta do usuário
                 st.session_state.respostas_usuario.append({
                     "pergunta": pergunta["pergunta"],
@@ -120,28 +91,24 @@ def app():
                     "resposta_correta": pergunta["resposta_correta"]
                 })
                 
-                # Feedback imediato
+                # Atualizar a pontuação se a resposta estiver correta
                 if opcao == pergunta["resposta_correta"]:
-                    st.success("Resposta Correta! 🎉")
                     st.session_state.pontuacao += 1
-                else:
-                    st.error("Resposta Errada 😞")
-                
+
                 # Controlar se a pergunta foi respondida
                 st.session_state.respondido = True
-                break  # Evitar múltiplos cliques
+                st.session_state.pergunta_atual += 1  # Avançar para a próxima pergunta automaticamente
 
-        # Passar automaticamente para a próxima pergunta após resposta
+        # Se já tiver respondido, passar para a próxima pergunta automaticamente
         if st.session_state.respondido:
             st.session_state.respondido = False  # Resetar o controle de pergunta respondida
-            st.session_state.pergunta_atual += 1
 
-    # Exibir o resultado final do quiz
+    # Se já tiver terminado o quiz, exibir o resultado
     if st.session_state.pergunta_atual == len(perguntas):
         st.write("Quiz Concluído!")
         st.write(f"Você acertou {st.session_state.pontuacao} de {len(perguntas)} perguntas!")
 
-        # Exibir a pontuação final
+        # Exibir a pontuação final de 0 a 10
         score = (st.session_state.pontuacao / len(perguntas)) * 10
         st.write(f"Sua pontuação final é: {score:.1f}/10")
 
@@ -154,15 +121,6 @@ def app():
             st.warning("🙂 Você se saiu bem, mas pode melhorar. Continue praticando!")
         else:
             st.error("😞 Parece que você precisa estudar mais. Tente novamente!")
-
-        # Exibir gráfico de desempenho
-        exibir_grafico()
-
-        # Botão para reiniciar o quiz
-        if st.button("Reiniciar Quiz"):
-            st.session_state.pergunta_atual = 0
-            st.session_state.pontuacao = 0
-            st.session_state.respostas_usuario = []
 
 # Executar o app
 if __name__ == "__main__":
