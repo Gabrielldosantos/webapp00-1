@@ -80,30 +80,24 @@ def app():
         # Exibir animação no título
         animacao_pergunta(pergunta["pergunta"])
 
-        # Mostrar as opções de resposta sem bolinha
-        resposta_usuario = st.radio(
-            "Escolha a resposta:", pergunta["respostas"], key=f"resposta_{pergunta_atual}", 
-            help="Escolha a resposta correta"
-        )
+        # Mostrar as opções de resposta como botões quadrados/retangulares
+        for opcao in pergunta["respostas"]:
+            if st.button(opcao, key=f"resposta_{pergunta_atual}_{opcao}"):
+                # Armazenar a resposta do usuário
+                st.session_state.respostas_usuario.append({
+                    "pergunta": pergunta["pergunta"],
+                    "resposta_usuario": opcao,
+                    "resposta_correta": pergunta["resposta_correta"]
+                })
+                
+                # Atualizar a pontuação se a resposta estiver correta
+                if opcao == pergunta["resposta_correta"]:
+                    st.session_state.pontuacao += 1
 
-        # Verificar se o usuário fez a seleção e registrar a resposta
-        if resposta_usuario:
-            # Armazenar a resposta do usuário
-            st.session_state.respostas_usuario.append({
-                "pergunta": pergunta["pergunta"],
-                "resposta_usuario": resposta_usuario,
-                "resposta_correta": pergunta["resposta_correta"]
-            })
-            
-            # Atualizar a pontuação se a resposta estiver correta
-            if resposta_usuario == pergunta["resposta_correta"]:
-                st.session_state.pontuacao += 1
+                # Avançar para a próxima pergunta
+                st.session_state.pergunta_atual += 1
 
-            # Avançar para a próxima pergunta
-            st.session_state.pergunta_atual += 1
-
-            # Exibir botão para avançar
-            if st.button('Próxima Pergunta'):
+                # Exibir botão para avançar para a próxima pergunta
                 st.experimental_rerun()
 
     # Se já tiver terminado o quiz, exibir o resultado
