@@ -105,11 +105,6 @@ def app():
                 st.session_state.respondido = True
                 break
 
-        # Agora, com a resposta dada, verificamos se a pessoa pode avançar
-        if st.session_state.respondido:
-            st.session_state.pergunta_atual += 1
-            st.session_state.respondido = False  # Resetar a resposta para a próxima pergunta
-
     # Se já tiver terminado o quiz, exibir o resultado
     if st.session_state.pergunta_atual == len(perguntas):
         st.write("Quiz Concluído!")
@@ -129,20 +124,19 @@ def app():
         else:
             st.error("😞 Parece que você precisa estudar mais. Tente novamente!")
 
-    # Adicionar os botões de navegação (Seguir e Voltar) nas laterais
-    col1, col2 = st.columns([1, 6])  # Colocando mais espaço à direita para "Seguir"
-    
-    # Colocando o botão "Voltar" na barra lateral esquerda
-    with st.sidebar:
-        if st.button("Voltar", key="voltar"):
-            if st.session_state.pergunta_atual > 0:
-                ir_para_pergunta(-1)  # Navega para a pergunta anterior
-
-    # Colocando o botão "Seguir" ao lado, controlado pela navegação
-    with col2:
-        if st.button("Seguir", key="seguir"):
-            if st.session_state.pergunta_atual < len(perguntas) - 1:
-                ir_para_pergunta(1)  # Navega para a próxima pergunta
+    else:
+        # Adicionar os botões de navegação (Seguir e Voltar) nas laterais
+        col1, col2 = st.columns([1, 6])  # Colocando mais espaço à direita para "Seguir"
+        
+        with col1:
+            if st.button("Voltar", key="voltar"):
+                if st.session_state.pergunta_atual > 0:
+                    ir_para_pergunta(-1)  # Navega para a pergunta anterior
+                
+        with col2:
+            if st.button("Seguir", key="seguir"):
+                if st.session_state.pergunta_atual < len(perguntas) - 1:
+                    ir_para_pergunta(1)  # Navega para a próxima pergunta
 
 # Executar o app
 if __name__ == "__main__":
