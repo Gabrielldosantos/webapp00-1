@@ -69,7 +69,6 @@ def app():
         st.session_state.respostas_usuario = []
         st.session_state.pergunta_atual = 0
         st.session_state.pontuacao = 0
-        st.session_state.pergunta_respondida = False
 
     # Exibir uma pergunta por vez
     pergunta_atual = st.session_state.pergunta_atual
@@ -87,8 +86,8 @@ def app():
             help="Escolha a resposta correta"
         )
 
-        # Botão para seguir para a próxima pergunta
-        if st.button("Próxima Pergunta"):
+        # Quando o usuário seleciona uma resposta, processar e avançar automaticamente
+        if resposta_usuario:
             # Armazenar resposta do usuário sem mostrar se está correta ou errada
             st.session_state.respostas_usuario.append({
                 "pergunta": pergunta["pergunta"],
@@ -100,9 +99,9 @@ def app():
             if resposta_usuario == pergunta["resposta_correta"]:
                 st.session_state.pontuacao += 1
 
-            # Avançar para a próxima pergunta ou terminar
+            # Avançar para a próxima pergunta
             st.session_state.pergunta_atual += 1
-            st.session_state.pergunta_respondida = True
+            st.experimental_rerun()  # Atualiza a página para a próxima pergunta
 
     # Se já tiver terminado o quiz, exibir o resultado
     if st.session_state.pergunta_atual == len(perguntas):
