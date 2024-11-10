@@ -70,6 +70,7 @@ def app():
         st.session_state.pergunta_atual = 0
         st.session_state.pontuacao = 0
         st.session_state.resposta_correta = None
+        st.session_state.respondido = False  # Controla se a pergunta já foi respondida
 
     # Exibir uma pergunta por vez
     pergunta_atual = st.session_state.pergunta_atual
@@ -95,10 +96,13 @@ def app():
                 if opcao == pergunta["resposta_correta"]:
                     st.session_state.pontuacao += 1
 
-                # Avançar para a próxima pergunta
-                st.session_state.pergunta_atual += 1
+                # Controlar se a pergunta foi respondida
+                st.session_state.respondido = True
 
-                # Não chamar rerun aqui, só atualizar a sessão
+        # Após o botão ser clicado, passar para a próxima pergunta automaticamente
+        if st.session_state.respondido:
+            st.session_state.pergunta_atual += 1
+            st.session_state.respondido = False  # Resetar o controle de pergunta respondida
 
     # Se já tiver terminado o quiz, exibir o resultado
     if st.session_state.pergunta_atual == len(perguntas):
