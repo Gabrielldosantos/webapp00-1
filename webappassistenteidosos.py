@@ -92,4 +92,67 @@ def enviar_email(destinatario, assunto, corpo):
 # Função para a tela de boas-vindas
 def tela_boas_vindas():
     st.title("Assistente para Idosos")
-    st.image("https://via.placeholder.com/800x200.png?tex
+    st.image("https://via.placeholder.com/800x200.png?text=Bem-vindo+ao+Assistente", use_column_width=True)
+    st.write("""
+        Olá! Este é o Assistente para Idosos, um aplicativo criado para ajudar você a se conectar com seus amigos e familiares de forma fácil e rápida. 
+        Escolha uma das opções abaixo e siga as instruções para realizar a ação desejada.
+    """)
+
+# Função para registrar os horários de remédios
+def registrar_horarios_remedios():
+    st.subheader("💊 Registre os Horários de Remédios")
+    remedio_nome = st.text_input("Nome do remédio:")
+    horario = st.time_input("Hora para tomar o remédio:", datetime.time(8, 0))
+
+    if st.button("Adicionar Horário") and remedio_nome:
+        # Adicionar o remédio e horário à lista, que agora está armazenada no session_state
+        st.session_state.horarios_remedios.append({"remedio": remedio_nome, "horario": horario.strftime("%H:%M")})
+        st.success(f"Horário para {remedio_nome} adicionado com sucesso!")
+
+    # Exibir a lista de remédios e horários
+    if st.session_state.horarios_remedios:
+        st.write("### Horários dos Remédios:")
+        for item in st.session_state.horarios_remedios:
+            st.write(f"**{item['remedio']}** - {item['horario']}")
+
+# Função para acionar membro da família em caso de mal-estar
+def acionar_familia_emergencia():
+    st.subheader("🚨 Acionar Família em Caso de Emergência")
+    sintoma = st.selectbox("Selecione o sintoma:", ["Dor", "Enjoo", "Tontura", "Mal-estar"])
+    contato_familia = st.selectbox("Escolha o membro da família para acionar:", 
+                                   [f"{nome} ({numero})" for nome, numero in contatos.items() if nome != "Mãe" and nome != "Pai"])
+
+    if st.button("Acionar Membro da Família"):
+        if sintoma and contato_familia:
+            nome_familia = contato_familia.split(' (')[0]
+            email_familia = "email_do_familia@example.com"  # Substitua com o e-mail do membro da família
+            mensagem = f"URGENTE: O idoso está com {sintoma}. Favor verificar."
+            # Enviar e-mail
+            enviar_email(email_familia, f"Sintoma de {sintoma} detectado", mensagem)
+        else:
+            st.error("Por favor, selecione um sintoma e um membro da família.")
+
+# Função principal que controla a navegação
+def main():
+    adicionar_css()
+    tela_boas_vindas()
+
+    col1, col2 = st.columns(2)
+    with col1:
+        opcao = st.selectbox("O que você gostaria de fazer?", [
+            "Ligar para um Contato via WhatsApp",
+            "Registrar Horários de Remédios",
+            "Acionar Família em Caso de Emergência"
+        ])
+    with col2:
+        st.image("https://via.placeholder.com/150.png?text=Icon", use_column_width=True)
+
+    if opcao == "Ligar para um Contato via WhatsApp":
+        pass  # Implementar a lógica de WhatsApp se necessário
+    elif opcao == "Registrar Horários de Remédios":
+        registrar_horarios_remedios()
+    elif opcao == "Acionar Família em Caso de Emergência":
+        acionar_familia_emergencia()
+
+if __name__ == '__main__':
+    main()
