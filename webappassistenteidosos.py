@@ -97,11 +97,17 @@ def app():
 
                 # Controlar se a pergunta foi respondida
                 st.session_state.respondido = True
-                st.session_state.pergunta_atual += 1  # Avançar para a próxima pergunta automaticamente
+                st.session_state.pergunta_atual += 1  # Avançar para a próxima pergunta imediatamente
 
-        # Se já tiver respondido, passar para a próxima pergunta automaticamente
-        if st.session_state.respondido:
-            st.session_state.respondido = False  # Resetar o controle de pergunta respondida
+                # Exibir feedback imediato
+                if opcao == pergunta["resposta_correta"]:
+                    st.success("Resposta correta! 🎉")
+                else:
+                    st.error("Resposta errada! 😞")
+
+                # Pausar brevemente antes de avançar para a próxima pergunta
+                st.session_state.respondido = False  # Resetar o controle de pergunta respondida
+                break  # Evitar múltiplos cliques
 
     # Se já tiver terminado o quiz, exibir o resultado
     if st.session_state.pergunta_atual == len(perguntas):
