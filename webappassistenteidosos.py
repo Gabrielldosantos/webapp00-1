@@ -122,16 +122,6 @@ def app():
         else:
             st.error("😞 Parece que você precisa estudar mais. Tente novamente!")
 
-        # Mostrar todas as perguntas com respostas corretas/erradas
-        for resposta in st.session_state.respostas_usuario:
-            if resposta["resposta_usuario"] == resposta["resposta_correta"]:
-                st.write(f"**Pergunta**: {resposta['pergunta']}")
-                st.write(f"**Sua resposta**: {resposta['resposta_usuario']} (Correta!)\n")
-            else:
-                st.write(f"**Pergunta**: {resposta['pergunta']}")
-                st.write(f"**Sua resposta**: {resposta['resposta_usuario']} (Errada)")
-                st.write(f"**Resposta correta**: {resposta['resposta_correta']}\n")
-
 # Executar o app
 if __name__ == "__main__":
     app()
