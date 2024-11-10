@@ -99,9 +99,9 @@ def app():
                 st.session_state.respondido = True
                 st.session_state.pergunta_atual += 1  # Avançar para a próxima pergunta automaticamente
 
-        # Se já tiver respondido, passar para a próxima pergunta automaticamente
-        if st.session_state.respondido:
-            st.session_state.respondido = False  # Resetar o controle de pergunta respondida
+                # Após a resposta ser dada, travar o botão e evitar múltiplos cliques
+                st.session_state.respondido = False  # Resetar o controle de pergunta respondida
+                break
 
     # Se já tiver terminado o quiz, exibir o resultado
     if st.session_state.pergunta_atual == len(perguntas):
