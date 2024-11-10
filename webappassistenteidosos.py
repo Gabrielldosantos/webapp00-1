@@ -99,7 +99,7 @@ def app():
             if resposta_usuario == pergunta["resposta_correta"]:
                 st.session_state.pontuacao += 1
 
-            # Avançar para a próxima pergunta ou terminar
+            # Avançar para a próxima pergunta
             st.session_state.pergunta_atual += 1
 
     # Se já tiver terminado o quiz, exibir o resultado
