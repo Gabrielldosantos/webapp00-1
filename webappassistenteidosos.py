@@ -1,4 +1,6 @@
 import streamlit as st
+import time
+from random import shuffle
 
 # Definir as 10 perguntas e respostas
 perguntas = [
@@ -54,32 +56,62 @@ perguntas = [
     }
 ]
 
+# Função para adicionar animações
+def animacao_pergunta(titulo):
+    st.markdown(f"<h1 style='text-align: center; color: #FF4B4B;'>🎉 {titulo} 🎉</h1>", unsafe_allow_html=True)
+
 # Função principal do Streamlit
 def app():
-    st.title("Quiz de Perguntas e Respostas")
-    st.write("Responda as perguntas abaixo:")
+    # Título e introdução
+    st.title("🎮 Quiz Animado 🎮")
+    st.write("Responda as perguntas abaixo e veja o seu desempenho!")
 
     # Estado de sessão para armazenar as respostas do usuário
     if 'respostas_usuario' not in st.session_state:
         st.session_state.respostas_usuario = []
         st.session_state.pergunta_atual = 0
+        st.session_state.pontuacao = 0
 
     # Exibir uma pergunta por vez
     pergunta_atual = st.session_state.pergunta_atual
     pergunta = perguntas[pergunta_atual]
 
-    # Exibir a pergunta e opções de resposta
-    resposta_usuario = st.radio(pergunta["pergunta"], pergunta["respostas"], key=pergunta["pergunta"])
+    # Exibir animação na tela
+    animacao_pergunta(pergunta["pergunta"])
 
-    # Armazenar a resposta
+    # Embaralhar as respostas para tornar o quiz mais dinâmico
+    shuffle(pergunta["respostas"])
+
+    # Mostrar opções de resposta com cores
+    resposta_usuario = st.radio(
+        "Escolha a resposta:", pergunta["respostas"], key=pergunta["pergunta"], 
+        help="Escolha a resposta que você acha correta"
+    )
+
+    # Exibir contagem regressiva (animada) com tempo para responder
+    with st.empty():
+        for i in range(5, 0, -1):
+            st.subheader(f"Tempo restante: {i} segundos")
+            time.sleep(1)
+            st.empty()
+
+    # Armazenar a resposta e calcular pontuação
     if st.button("Próxima Pergunta"):
+        # Verificar se a resposta do usuário está correta
+        if resposta_usuario == pergunta["resposta_correta"]:
+            st.session_state.pontuacao += 1
+            st.success("✅ Resposta correta!")
+        else:
+            st.error("❌ Resposta errada!")
+
+        # Armazenar resposta do usuário
         st.session_state.respostas_usuario.append({
             "pergunta": pergunta["pergunta"],
             "resposta_usuario": resposta_usuario,
             "resposta_correta": pergunta["resposta_correta"]
         })
 
-        # Avançar para a próxima pergunta
+        # Avançar para a próxima pergunta ou terminar
         if pergunta_atual < len(perguntas) - 1:
             st.session_state.pergunta_atual += 1
         else:
@@ -87,13 +119,12 @@ def app():
 
     # Se já tiver terminado o quiz, exibir o resultado
     if st.session_state.pergunta_atual == len(perguntas):
-        st.write("Quiz Concluído!")
-        pontuacao = 0
+        st.write("Quiz Concluído! 🎉")
+        st.write(f"Você acertou {st.session_state.pontuacao} de {len(perguntas)} perguntas!")
 
-        # Mostrar as respostas
+        # Mostrar todas as perguntas com respostas corretas/erradas
         for resposta in st.session_state.respostas_usuario:
             if resposta["resposta_usuario"] == resposta["resposta_correta"]:
-                pontuacao += 1
                 st.write(f"**Pergunta**: {resposta['pergunta']}")
                 st.write(f"**Sua resposta**: {resposta['resposta_usuario']} (Correta!)\n")
             else:
@@ -101,15 +132,13 @@ def app():
                 st.write(f"**Sua resposta**: {resposta['resposta_usuario']} (Errada)")
                 st.write(f"**Resposta correta**: {resposta['resposta_correta']}\n")
 
-        # Mostrar a pontuação final
-        st.write(f"Você acertou {pontuacao} de {len(perguntas)} perguntas!")
-
-        if pontuacao == len(perguntas):
-            st.success("Parabéns! Você acertou todas as perguntas!")
-        elif pontuacao >= len(perguntas) / 2:
-            st.warning("Você fez um bom trabalho, mas ainda há espaço para melhorar!")
+        # Feedback visual baseado na pontuação
+        if st.session_state.pontuacao == len(perguntas):
+            st.success("🥳 Parabéns! Você acertou todas as perguntas!")
+        elif st.session_state.pontuacao >= len(perguntas) / 2:
+            st.warning("👍 Bom trabalho! Você fez um bom desempenho!")
         else:
-            st.error("Precisa estudar mais! Tente novamente.")
+            st.error("😞 Parece que você precisa estudar mais! Tente novamente.")
 
 # Executar o app
 if __name__ == "__main__":
