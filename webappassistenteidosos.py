@@ -82,22 +82,23 @@ def app():
         # Exibir animação no título
         animacao_pergunta(pergunta["pergunta"])
 
-        # Mostrar as opções de resposta como botões quadrados/retangulares
-        for opcao in pergunta["respostas"]:
-            if st.button(opcao, key=f"resposta_{pergunta_atual}_{opcao}"):
-                # Armazenar a resposta do usuário
-                st.session_state.respostas_usuario.append({
-                    "pergunta": pergunta["pergunta"],
-                    "resposta_usuario": opcao,
-                    "resposta_correta": pergunta["resposta_correta"]
-                })
-                
-                # Atualizar a pontuação se a resposta estiver correta
-                if opcao == pergunta["resposta_correta"]:
-                    st.session_state.pontuacao += 1
+        # Mostrar as opções de resposta como quadrados/retangulares
+        resposta_usuario = st.radio("Escolha uma opção:", pergunta["respostas"], key=f"resposta_{pergunta_atual}")
 
-                # Controlar se a pergunta foi respondida
-                st.session_state.respondido = True
+        if resposta_usuario:
+            # Armazenar a resposta do usuário
+            st.session_state.respostas_usuario.append({
+                "pergunta": pergunta["pergunta"],
+                "resposta_usuario": resposta_usuario,
+                "resposta_correta": pergunta["resposta_correta"]
+            })
+            
+            # Atualizar a pontuação se a resposta estiver correta
+            if resposta_usuario == pergunta["resposta_correta"]:
+                st.session_state.pontuacao += 1
+
+            # Controlar se a pergunta foi respondida
+            st.session_state.respondido = True
 
         # Após o botão ser clicado, passar para a próxima pergunta automaticamente
         if st.session_state.respondido:
