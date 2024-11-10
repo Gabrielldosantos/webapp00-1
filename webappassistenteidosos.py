@@ -74,48 +74,48 @@ def app():
 
     # Exibir uma pergunta por vez
     pergunta_atual = st.session_state.pergunta_atual
-    pergunta = perguntas[pergunta_atual]
 
-    # Exibir animação na tela
-    animacao_pergunta(pergunta["pergunta"])
+    # Verificar se a pergunta_atual não excede o número de perguntas
+    if pergunta_atual < len(perguntas):
+        pergunta = perguntas[pergunta_atual]
 
-    # Embaralhar as respostas para tornar o quiz mais dinâmico
-    shuffle(pergunta["respostas"])
+        # Exibir animação na tela
+        animacao_pergunta(pergunta["pergunta"])
 
-    # Mostrar opções de resposta com cores
-    resposta_usuario = st.radio(
-        "Escolha a resposta:", pergunta["respostas"], key=pergunta["pergunta"], 
-        help="Escolha a resposta que você acha correta"
-    )
+        # Embaralhar as respostas para tornar o quiz mais dinâmico
+        shuffle(pergunta["respostas"])
 
-    # Exibir contagem regressiva (animada) com tempo para responder
-    with st.empty():
-        for i in range(5, 0, -1):
-            st.subheader(f"Tempo restante: {i} segundos")
-            time.sleep(1)
-            st.empty()
+        # Mostrar opções de resposta com cores
+        resposta_usuario = st.radio(
+            "Escolha a resposta:", pergunta["respostas"], key=pergunta["pergunta"], 
+            help="Escolha a resposta que você acha correta"
+        )
 
-    # Armazenar a resposta e calcular pontuação
-    if st.button("Próxima Pergunta"):
-        # Verificar se a resposta do usuário está correta
-        if resposta_usuario == pergunta["resposta_correta"]:
-            st.session_state.pontuacao += 1
-            st.success("✅ Resposta correta!")
-        else:
-            st.error("❌ Resposta errada!")
+        # Exibir contagem regressiva (animada) com tempo para responder
+        with st.empty():
+            for i in range(5, 0, -1):
+                st.subheader(f"Tempo restante: {i} segundos")
+                time.sleep(1)
+                st.empty()
 
-        # Armazenar resposta do usuário
-        st.session_state.respostas_usuario.append({
-            "pergunta": pergunta["pergunta"],
-            "resposta_usuario": resposta_usuario,
-            "resposta_correta": pergunta["resposta_correta"]
-        })
+        # Armazenar a resposta e calcular pontuação
+        if st.button("Próxima Pergunta"):
+            # Verificar se a resposta do usuário está correta
+            if resposta_usuario == pergunta["resposta_correta"]:
+                st.session_state.pontuacao += 1
+                st.success("✅ Resposta correta!")
+            else:
+                st.error("❌ Resposta errada!")
 
-        # Avançar para a próxima pergunta ou terminar
-        if pergunta_atual < len(perguntas) - 1:
+            # Armazenar resposta do usuário
+            st.session_state.respostas_usuario.append({
+                "pergunta": pergunta["pergunta"],
+                "resposta_usuario": resposta_usuario,
+                "resposta_correta": pergunta["resposta_correta"]
+            })
+
+            # Avançar para a próxima pergunta ou terminar
             st.session_state.pergunta_atual += 1
-        else:
-            st.session_state.pergunta_atual = len(perguntas)  # Fim do quiz
 
     # Se já tiver terminado o quiz, exibir o resultado
     if st.session_state.pergunta_atual == len(perguntas):
