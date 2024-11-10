@@ -95,6 +95,10 @@ def app():
                 "resposta_correta": pergunta["resposta_correta"]
             })
 
+            # Atualizar pontuação: aumenta 1 ponto se a resposta estiver correta
+            if resposta_usuario == pergunta["resposta_correta"]:
+                st.session_state.pontuacao += 1
+
             # Avançar para a próxima pergunta ou terminar
             st.session_state.pergunta_atual += 1
 
@@ -122,7 +126,6 @@ def app():
             if resposta["resposta_usuario"] == resposta["resposta_correta"]:
                 st.write(f"**Pergunta**: {resposta['pergunta']}")
                 st.write(f"**Sua resposta**: {resposta['resposta_usuario']} (Correta!)\n")
-                st.session_state.pontuacao += 1  # Aumentar a pontuação se estiver correta
             else:
                 st.write(f"**Pergunta**: {resposta['pergunta']}")
                 st.write(f"**Sua resposta**: {resposta['resposta_usuario']} (Errada)")
