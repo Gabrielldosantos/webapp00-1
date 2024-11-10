@@ -71,6 +71,12 @@ def app():
         st.session_state.pontuacao = 0
         st.session_state.respondido = False  # Controla se a pergunta já foi respondida
 
+    # Função para navegar para a próxima ou anterior pergunta
+    def ir_para_pergunta(incremento):
+        # Atualiza a pergunta atual
+        st.session_state.pergunta_atual += incremento
+        st.session_state.respondido = False  # Reseta o estado da pergunta respondida
+
     # Exibir uma pergunta por vez
     pergunta_atual = st.session_state.pergunta_atual
 
@@ -97,10 +103,6 @@ def app():
 
                 # Controlar se a pergunta foi respondida
                 st.session_state.respondido = True
-                st.session_state.pergunta_atual += 1  # Avançar para a próxima pergunta automaticamente
-
-                # Após a resposta ser dada, travar o botão e evitar múltiplos cliques
-                st.session_state.respondido = False  # Resetar o controle de pergunta respondida
                 break
 
     # Se já tiver terminado o quiz, exibir o resultado
@@ -121,6 +123,20 @@ def app():
             st.warning("🙂 Você se saiu bem, mas pode melhorar. Continue praticando!")
         else:
             st.error("😞 Parece que você precisa estudar mais. Tente novamente!")
+
+    else:
+        # Adicionando os botões de navegação (Seguir e Voltar) nas laterais
+        col1, col2 = st.columns([1, 6])  # Colocando mais espaço à direita para "Seguir"
+        
+        with col1:
+            if st.button("Voltar", key="voltar"):
+                if st.session_state.pergunta_atual > 0:
+                    ir_para_pergunta(-1)  # Navega para a pergunta anterior
+                
+        with col2:
+            if st.button("Seguir", key="seguir"):
+                if st.session_state.pergunta_atual < len(perguntas) - 1:
+                    ir_para_pergunta(1)  # Navega para a próxima pergunta
 
 # Executar o app
 if __name__ == "__main__":
