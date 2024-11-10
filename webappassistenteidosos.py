@@ -69,6 +69,7 @@ def app():
         st.session_state.respostas_usuario = []
         st.session_state.pergunta_atual = 0
         st.session_state.pontuacao = 0
+        st.session_state.resposta_correta = None
 
     # Exibir uma pergunta por vez
     pergunta_atual = st.session_state.pergunta_atual
@@ -97,8 +98,7 @@ def app():
                 # Avançar para a próxima pergunta
                 st.session_state.pergunta_atual += 1
 
-                # Exibir botão para avançar para a próxima pergunta
-                st.experimental_rerun()
+                # Não chamar rerun aqui, só atualizar a sessão
 
     # Se já tiver terminado o quiz, exibir o resultado
     if st.session_state.pergunta_atual == len(perguntas):
