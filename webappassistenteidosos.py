@@ -1,6 +1,22 @@
 import streamlit as st
 import time
+import pygame
 from random import shuffle
+
+# Inicializar o pygame para música de fundo
+pygame.mixer.init()
+
+# Função para tocar música de fundo
+def tocar_musica():
+    try:
+        pygame.mixer.music.load("background_music.mp3")  # Coloque o caminho para a música
+        pygame.mixer.music.play(-1)  # Reproduzir a música em loop
+    except:
+        st.warning("Não foi possível carregar a música de fundo.")
+
+# Função para parar a música
+def parar_musica():
+    pygame.mixer.music.stop()
 
 # Definir as 10 perguntas e respostas
 perguntas = [
@@ -56,15 +72,24 @@ perguntas = [
     }
 ]
 
-# Função para adicionar animações
+# Função para adicionar animações no texto
 def animacao_pergunta(titulo):
-    st.markdown(f"<h1 style='text-align: center; color: #FF4B4B;'>🎉 {titulo} 🎉</h1>", unsafe_allow_html=True)
+    st.markdown(f"<h1 style='text-align: center; font-size: 3em; color: #FF6347; font-weight: bold;'>{titulo}</h1>", unsafe_allow_html=True)
+
+def animacao_resposta(feedback):
+    if feedback == "correto":
+        st.markdown(f"<h2 style='text-align: center; color: #32CD32; font-size: 2em;'>Resposta Correta! ✅</h2>", unsafe_allow_html=True)
+    else:
+        st.markdown(f"<h2 style='text-align: center; color: #FF6347; font-size: 2em;'>Resposta Errada! ❌</h2>", unsafe_allow_html=True)
 
 # Função principal do Streamlit
 def app():
+    # Iniciar a música
+    tocar_musica()
+
     # Título e introdução
-    st.title("🎮 Quiz Animado 🎮")
-    st.write("Responda as perguntas abaixo e veja o seu desempenho!")
+    st.title("Quiz Animado")
+    st.write("Responda as perguntas abaixo e veja seu desempenho! Boa sorte! 🎉")
 
     # Estado de sessão para armazenar as respostas do usuário
     if 'respostas_usuario' not in st.session_state:
@@ -88,24 +113,17 @@ def app():
         # Mostrar opções de resposta com cores
         resposta_usuario = st.radio(
             "Escolha a resposta:", pergunta["respostas"], key=pergunta["pergunta"], 
-            help="Escolha a resposta que você acha correta"
+            help="Escolha a resposta correta"
         )
-
-        # Exibir contagem regressiva (animada) com tempo para responder
-        with st.empty():
-            for i in range(5, 0, -1):
-                st.subheader(f"Tempo restante: {i} segundos")
-                time.sleep(1)
-                st.empty()
 
         # Armazenar a resposta e calcular pontuação
         if st.button("Próxima Pergunta"):
             # Verificar se a resposta do usuário está correta
             if resposta_usuario == pergunta["resposta_correta"]:
                 st.session_state.pontuacao += 1
-                st.success("✅ Resposta correta!")
+                animacao_resposta("correto")
             else:
-                st.error("❌ Resposta errada!")
+                animacao_resposta("errado")
 
             # Armazenar resposta do usuário
             st.session_state.respostas_usuario.append({
@@ -119,7 +137,9 @@ def app():
 
     # Se já tiver terminado o quiz, exibir o resultado
     if st.session_state.pergunta_atual == len(perguntas):
-        st.write("Quiz Concluído! 🎉")
+        parar_musica()  # Parar a música ao final
+
+        st.write("Quiz Concluído!")
         st.write(f"Você acertou {st.session_state.pontuacao} de {len(perguntas)} perguntas!")
 
         # Mostrar todas as perguntas com respostas corretas/erradas
