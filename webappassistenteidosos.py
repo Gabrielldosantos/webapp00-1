@@ -82,22 +82,21 @@ def app():
 
         # Mostrar opções de resposta sem bolinha (usar st.selectbox)
         resposta_usuario = st.selectbox(
-            "Escolha a resposta:", pergunta["respostas"], key=pergunta["pergunta"], 
+            "Escolha a resposta:", pergunta["respostas"], key=f"resposta_{pergunta_atual}", 
             help="Escolha a resposta correta"
         )
 
         # Quando o usuário seleciona uma resposta, processar e avançar automaticamente
         if resposta_usuario:
-            # Armazenar resposta do usuário sem mostrar se está correta ou errada
+            # Armazenar resposta do usuário e verificar a resposta correta
+            if resposta_usuario == pergunta["resposta_correta"]:
+                st.session_state.pontuacao += 1
+
             st.session_state.respostas_usuario.append({
                 "pergunta": pergunta["pergunta"],
                 "resposta_usuario": resposta_usuario,
                 "resposta_correta": pergunta["resposta_correta"]
             })
-
-            # Atualizar pontuação: aumenta 1 ponto se a resposta estiver correta
-            if resposta_usuario == pergunta["resposta_correta"]:
-                st.session_state.pontuacao += 1
 
             # Avançar para a próxima pergunta
             st.session_state.pergunta_atual += 1
