@@ -101,8 +101,8 @@ def app():
             # Avançar para a próxima pergunta
             st.session_state.pergunta_atual += 1
 
-            # Evitar que o estado da página congele (não precisa do rerun)
-            st.experimental_set_query_params(pergunta_atual=st.session_state.pergunta_atual)
+            # Usar `st.experimental_rerun()` para atualizar a tela
+            st.experimental_rerun()
 
     # Se já tiver terminado o quiz, exibir o resultado
     if st.session_state.pergunta_atual == len(perguntas):
