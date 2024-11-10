@@ -1,5 +1,4 @@
 import streamlit as st
-from random import shuffle
 
 # Definir as perguntas de lógica de programação
 perguntas = [
@@ -65,7 +64,7 @@ def app():
     st.title("Quiz de Lógica de Programação")
     st.write("Responda as perguntas sobre lógica de programação e veja seu desempenho! Boa sorte! 🎉")
 
-    # Estado de sessão para armazenar as respostas do usuário
+    # Inicializa o estado da sessão
     if 'respostas_usuario' not in st.session_state:
         st.session_state.respostas_usuario = []
         st.session_state.pergunta_atual = 0
@@ -81,18 +80,15 @@ def app():
         # Exibir animação na tela
         animacao_pergunta(pergunta["pergunta"])
 
-        # Embaralhar as respostas para tornar o quiz mais dinâmico
-        shuffle(pergunta["respostas"])
-
         # Mostrar opções de resposta com cores
         resposta_usuario = st.radio(
             "Escolha a resposta:", pergunta["respostas"], key=pergunta["pergunta"], 
             help="Escolha a resposta correta"
         )
 
-        # Armazenar a resposta sem mostrar se está certa ou errada
+        # Botão para seguir para a próxima pergunta
         if st.button("Próxima Pergunta"):
-            # Armazenar resposta do usuário
+            # Armazenar resposta do usuário sem mostrar se está correta ou errada
             st.session_state.respostas_usuario.append({
                 "pergunta": pergunta["pergunta"],
                 "resposta_usuario": resposta_usuario,
