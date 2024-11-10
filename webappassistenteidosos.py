@@ -1,5 +1,4 @@
 import streamlit as st
-import time
 from random import shuffle
 
 # Definir as perguntas de lógica de programação
@@ -121,23 +120,25 @@ def app():
         st.write("Quiz Concluído!")
         st.write(f"Você acertou {st.session_state.pontuacao} de {len(perguntas)} perguntas!")
 
+        # Exibir a pontuação final de 0 a 10
+        score = (st.session_state.pontuacao / len(perguntas)) * 10
+        st.write(f"Sua pontuação final é: {score:.1f}/10")
+
+        # Comentário baseado na pontuação
+        if score == 10:
+            st.success("🥳 Excelente! Você acertou todas as perguntas!")
+        elif score >= 7:
+            st.success("👍 Bom trabalho! Você tem uma boa compreensão de lógica de programação!")
+        elif score >= 5:
+            st.warning("🙂 Você se saiu bem, mas pode melhorar. Continue praticando!")
+        else:
+            st.error("😞 Parece que você precisa estudar mais. Tente novamente!")
+
         # Mostrar todas as perguntas com respostas corretas/erradas
         for resposta in st.session_state.respostas_usuario:
-            if resposta["resposta_usuario"] == resposta["resposta_correta"]:
-                st.write(f"**Pergunta**: {resposta['pergunta']}")
-                st.write(f"**Sua resposta**: {resposta['resposta_usuario']} (Correta!)\n")
-            else:
-                st.write(f"**Pergunta**: {resposta['pergunta']}")
-                st.write(f"**Sua resposta**: {resposta['resposta_usuario']} (Errada)")
-                st.write(f"**Resposta correta**: {resposta['resposta_correta']}\n")
-
-        # Feedback visual baseado na pontuação
-        if st.session_state.pontuacao == len(perguntas):
-            st.success("🥳 Parabéns! Você acertou todas as perguntas!")
-        elif st.session_state.pontuacao >= len(perguntas) / 2:
-            st.warning("👍 Bom trabalho! Você fez um bom desempenho!")
-        else:
-            st.error("😞 Parece que você precisa estudar mais! Tente novamente.")
+            st.write(f"**Pergunta**: {resposta['pergunta']}")
+            st.write(f"**Sua resposta**: {resposta['resposta_usuario']}")
+            st.write(f"**Resposta correta**: {resposta['resposta_correta']}\n")
 
 # Executar o app
 if __name__ == "__main__":
