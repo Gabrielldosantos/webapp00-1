@@ -80,8 +80,8 @@ def app():
         # Exibir animação na tela
         animacao_pergunta(pergunta["pergunta"])
 
-        # Mostrar opções de resposta com cores
-        resposta_usuario = st.radio(
+        # Mostrar opções de resposta sem bolinha (usar st.selectbox)
+        resposta_usuario = st.selectbox(
             "Escolha a resposta:", pergunta["respostas"], key=pergunta["pergunta"], 
             help="Escolha a resposta correta"
         )
@@ -99,7 +99,7 @@ def app():
             if resposta_usuario == pergunta["resposta_correta"]:
                 st.session_state.pontuacao += 1
 
-            # Avançar para a próxima pergunta (atualizar o estado)
+            # Avançar para a próxima pergunta
             st.session_state.pergunta_atual += 1
 
             # Evitar que o estado da página congele (não precisa do rerun)
