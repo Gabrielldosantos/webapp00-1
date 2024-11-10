@@ -80,9 +80,9 @@ def app():
         # Exibir animação na tela
         animacao_pergunta(pergunta["pergunta"])
 
-        # Mostrar opções de resposta sem bolinha (usar st.selectbox)
-        resposta_usuario = st.selectbox(
-            "Escolha a resposta:", pergunta["respostas"], key=f"resposta_{pergunta_atual}", 
+        # Mostrar opções de resposta sem bolinha (usar st.radio em vez de selectbox)
+        resposta_usuario = st.radio(
+            "Escolha a resposta:", pergunta["respostas"], index=-1, key=f"resposta_{pergunta_atual}", 
             help="Escolha a resposta correta"
         )
 
