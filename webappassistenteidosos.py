@@ -54,7 +54,7 @@ perguntas = [
     }
 ]
 
-# Função para adicionar animações no texto
+# Função para exibir animação no texto
 def animacao_pergunta(titulo):
     st.markdown(f"<h1 style='text-align: center; font-size: 3em; color: #FF6347; font-weight: bold;'>{titulo}</h1>", unsafe_allow_html=True)
 
@@ -64,7 +64,7 @@ def app():
     st.title("Quiz de Lógica de Programação")
     st.write("Responda as perguntas sobre lógica de programação e veja seu desempenho! Boa sorte! 🎉")
 
-    # Inicializa o estado da sessão
+    # Inicializar o estado de sessão
     if 'respostas_usuario' not in st.session_state:
         st.session_state.respostas_usuario = []
         st.session_state.pergunta_atual = 0
@@ -77,32 +77,34 @@ def app():
     if pergunta_atual < len(perguntas):
         pergunta = perguntas[pergunta_atual]
 
-        # Exibir animação na tela
+        # Exibir animação no título
         animacao_pergunta(pergunta["pergunta"])
 
-        # Mostrar opções de resposta sem bolinha (usar st.radio em vez de selectbox)
+        # Mostrar as opções de resposta sem bolinha
         resposta_usuario = st.radio(
-            "Escolha a resposta:", pergunta["respostas"], index=-1, key=f"resposta_{pergunta_atual}", 
+            "Escolha a resposta:", pergunta["respostas"], key=f"resposta_{pergunta_atual}", 
             help="Escolha a resposta correta"
         )
 
-        # Quando o usuário seleciona uma resposta, processar e avançar automaticamente
+        # Verificar se o usuário fez a seleção e registrar a resposta
         if resposta_usuario:
-            # Armazenar resposta do usuário e verificar a resposta correta
-            if resposta_usuario == pergunta["resposta_correta"]:
-                st.session_state.pontuacao += 1
-
+            # Armazenar a resposta do usuário
             st.session_state.respostas_usuario.append({
                 "pergunta": pergunta["pergunta"],
                 "resposta_usuario": resposta_usuario,
                 "resposta_correta": pergunta["resposta_correta"]
             })
+            
+            # Atualizar a pontuação se a resposta estiver correta
+            if resposta_usuario == pergunta["resposta_correta"]:
+                st.session_state.pontuacao += 1
 
             # Avançar para a próxima pergunta
             st.session_state.pergunta_atual += 1
 
-            # Usar `st.experimental_rerun()` para atualizar a tela
-            st.experimental_rerun()
+            # Exibir botão para avançar
+            if st.button('Próxima Pergunta'):
+                st.experimental_rerun()
 
     # Se já tiver terminado o quiz, exibir o resultado
     if st.session_state.pergunta_atual == len(perguntas):
