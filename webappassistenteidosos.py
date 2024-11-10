@@ -99,9 +99,11 @@ def app():
             if resposta_usuario == pergunta["resposta_correta"]:
                 st.session_state.pontuacao += 1
 
-            # Avançar para a próxima pergunta
+            # Avançar para a próxima pergunta (atualizar o estado)
             st.session_state.pergunta_atual += 1
-            st.experimental_rerun()  # Atualiza a página para a próxima pergunta
+
+            # Evitar que o estado da página congele (não precisa do rerun)
+            st.experimental_set_query_params(pergunta_atual=st.session_state.pergunta_atual)
 
     # Se já tiver terminado o quiz, exibir o resultado
     if st.session_state.pergunta_atual == len(perguntas):
