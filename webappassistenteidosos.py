@@ -99,12 +99,6 @@ def app():
                 st.session_state.respondido = True
                 st.session_state.pergunta_atual += 1  # Avançar para a próxima pergunta imediatamente
 
-                # Exibir feedback imediato
-                if opcao == pergunta["resposta_correta"]:
-                    st.success("Resposta correta! 🎉")
-                else:
-                    st.error("Resposta errada! 😞")
-
                 # Pausar brevemente antes de avançar para a próxima pergunta
                 st.session_state.respondido = False  # Resetar o controle de pergunta respondida
                 break  # Evitar múltiplos cliques
