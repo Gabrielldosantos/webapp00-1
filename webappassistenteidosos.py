@@ -59,12 +59,6 @@ perguntas = [
 def animacao_pergunta(titulo):
     st.markdown(f"<h1 style='text-align: center; font-size: 3em; color: #FF6347; font-weight: bold;'>{titulo}</h1>", unsafe_allow_html=True)
 
-def animacao_resposta(feedback):
-    if feedback == "correto":
-        st.markdown(f"<h2 style='text-align: center; color: #32CD32; font-size: 2em;'>Resposta Correta! ✅</h2>", unsafe_allow_html=True)
-    else:
-        st.markdown(f"<h2 style='text-align: center; color: #FF6347; font-size: 2em;'>Resposta Errada! ❌</h2>", unsafe_allow_html=True)
-
 # Função principal do Streamlit
 def app():
     # Título e introdução
@@ -96,15 +90,8 @@ def app():
             help="Escolha a resposta correta"
         )
 
-        # Armazenar a resposta e calcular pontuação
+        # Armazenar a resposta sem mostrar se está certa ou errada
         if st.button("Próxima Pergunta"):
-            # Verificar se a resposta do usuário está correta
-            if resposta_usuario == pergunta["resposta_correta"]:
-                st.session_state.pontuacao += 1
-                animacao_resposta("correto")
-            else:
-                animacao_resposta("errado")
-
             # Armazenar resposta do usuário
             st.session_state.respostas_usuario.append({
                 "pergunta": pergunta["pergunta"],
@@ -136,9 +123,14 @@ def app():
 
         # Mostrar todas as perguntas com respostas corretas/erradas
         for resposta in st.session_state.respostas_usuario:
-            st.write(f"**Pergunta**: {resposta['pergunta']}")
-            st.write(f"**Sua resposta**: {resposta['resposta_usuario']}")
-            st.write(f"**Resposta correta**: {resposta['resposta_correta']}\n")
+            if resposta["resposta_usuario"] == resposta["resposta_correta"]:
+                st.write(f"**Pergunta**: {resposta['pergunta']}")
+                st.write(f"**Sua resposta**: {resposta['resposta_usuario']} (Correta!)\n")
+                st.session_state.pontuacao += 1  # Aumentar a pontuação se estiver correta
+            else:
+                st.write(f"**Pergunta**: {resposta['pergunta']}")
+                st.write(f"**Sua resposta**: {resposta['resposta_usuario']} (Errada)")
+                st.write(f"**Resposta correta**: {resposta['resposta_correta']}\n")
 
 # Executar o app
 if __name__ == "__main__":
