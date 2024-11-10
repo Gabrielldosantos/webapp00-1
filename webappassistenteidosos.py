@@ -2,57 +2,57 @@ import streamlit as st
 import time
 from random import shuffle
 
-# Definir as 10 perguntas e respostas
+# Definir as perguntas de lógica de programação
 perguntas = [
     {
-        "pergunta": "Qual é a capital do Brasil?",
-        "respostas": ["São Paulo", "Rio de Janeiro", "Brasília", "Salvador"],
-        "resposta_correta": "Brasília"
+        "pergunta": "Qual é o comando usado para exibir algo na tela em Python?",
+        "respostas": ["echo", "printf", "print", "output"],
+        "resposta_correta": "print"
     },
     {
-        "pergunta": "Quem escreveu 'Dom Casmurro'?",
-        "respostas": ["Machado de Assis", "José de Alencar", "Clarice Lispector", "Guimarães Rosa"],
-        "resposta_correta": "Machado de Assis"
+        "pergunta": "Qual desses é um tipo de dado primitivo em Python?",
+        "respostas": ["Lista", "Dicionário", "Inteiro", "Conjunto"],
+        "resposta_correta": "Inteiro"
     },
     {
-        "pergunta": "Qual é o maior planeta do sistema solar?",
-        "respostas": ["Terra", "Júpiter", "Saturno", "Marte"],
-        "resposta_correta": "Júpiter"
+        "pergunta": "O que é uma variável em programação?",
+        "respostas": ["Um tipo de dado", "Uma operação matemática", "Um espaço na memória para armazenar dados", "Uma função"],
+        "resposta_correta": "Um espaço na memória para armazenar dados"
     },
     {
-        "pergunta": "Em que ano o Brasil conquistou sua independência?",
-        "respostas": ["1822", "1889", "1500", "1900"],
-        "resposta_correta": "1822"
+        "pergunta": "Qual é a estrutura de controle que permite repetir um bloco de código várias vezes?",
+        "respostas": ["if", "else", "for", "def"],
+        "resposta_correta": "for"
     },
     {
-        "pergunta": "Quem pintou a Mona Lisa?",
-        "respostas": ["Vincent van Gogh", "Pablo Picasso", "Leonardo da Vinci", "Claude Monet"],
-        "resposta_correta": "Leonardo da Vinci"
+        "pergunta": "Qual é o valor de 'x' após executar o seguinte código? `x = 5; x += 2`",
+        "respostas": ["7", "5", "2", "10"],
+        "resposta_correta": "7"
     },
     {
-        "pergunta": "Qual é a fórmula da água?",
-        "respostas": ["H2O", "CO2", "O2", "H2O2"],
-        "resposta_correta": "H2O"
+        "pergunta": "Qual comando em Python é usado para criar uma função?",
+        "respostas": ["def", "function", "create", "func"],
+        "resposta_correta": "def"
     },
     {
-        "pergunta": "Em que continente fica o Egito?",
-        "respostas": ["África", "Ásia", "Europa", "América"],
-        "resposta_correta": "África"
+        "pergunta": "O que é um loop infinito?",
+        "respostas": ["Um loop que nunca termina", "Um loop que termina após um número fixo de iterações", "Um loop usado apenas em funções", "Um tipo de estrutura condicional"],
+        "resposta_correta": "Um loop que nunca termina"
     },
     {
-        "pergunta": "Quem foi o primeiro homem a pisar na lua?",
-        "respostas": ["Buzz Aldrin", "Neil Armstrong", "Yuri Gagarin", "Alan Shepard"],
-        "resposta_correta": "Neil Armstrong"
+        "pergunta": "Em qual tipo de estrutura de dados podemos armazenar pares de chave e valor?",
+        "respostas": ["Lista", "Dicionário", "Tupla", "Conjunto"],
+        "resposta_correta": "Dicionário"
     },
     {
-        "pergunta": "Qual é o maior oceano do mundo?",
-        "respostas": ["Atlântico", "Índico", "Ártico", "Pacífico"],
-        "resposta_correta": "Pacífico"
+        "pergunta": "Qual é a principal função do comando 'if'?",
+        "respostas": ["Executar repetidamente um código", "Executar um código condicionalmente", "Definir uma variável", "Criar um loop"],
+        "resposta_correta": "Executar um código condicionalmente"
     },
     {
-        "pergunta": "Qual é o símbolo químico do ouro?",
-        "respostas": ["Au", "Ag", "Fe", "Pb"],
-        "resposta_correta": "Au"
+        "pergunta": "O que é um algoritmo?",
+        "respostas": ["Um tipo de dado", "Uma sequência de instruções para resolver um problema", "Um comando para exibir na tela", "Uma estrutura de repetição"],
+        "resposta_correta": "Uma sequência de instruções para resolver um problema"
     }
 ]
 
@@ -68,12 +68,9 @@ def animacao_resposta(feedback):
 
 # Função principal do Streamlit
 def app():
-    # Adicionar música de fundo
-    st.audio("background_music.mp3", format="audio/mp3", start_time=0)
-
     # Título e introdução
-    st.title("Quiz Animado")
-    st.write("Responda as perguntas abaixo e veja seu desempenho! Boa sorte! 🎉")
+    st.title("Quiz de Lógica de Programação")
+    st.write("Responda as perguntas sobre lógica de programação e veja seu desempenho! Boa sorte! 🎉")
 
     # Estado de sessão para armazenar as respostas do usuário
     if 'respostas_usuario' not in st.session_state:
