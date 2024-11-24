@@ -6,6 +6,7 @@ disciplinas = {
         {"pergunta": "Qual é o comando usado para exibir algo na tela em Python?", "respostas": ["echo", "printf", "print", "output"], "resposta_correta": "print"},
         {"pergunta": "Qual desses é um tipo de dado primitivo em Python?", "respostas": ["Lista", "Dicionário", "Inteiro", "Conjunto"], "resposta_correta": "Inteiro"},
         {"pergunta": "Qual é a estrutura de controle que permite repetir um bloco de código várias vezes?", "respostas": ["if", "else", "for", "def"], "resposta_correta": "for"},
+        {"pergunta": "Qual é a estrutura de controle que permite repetir um bloco de código várias vezes?", "respostas": ["if", "else", "for", "def"], "resposta_correta": "for"}, 
         # Adicione mais perguntas para completar as 10
     ],
     "Frontend": [
