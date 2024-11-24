@@ -1,129 +1,132 @@
+import random
 import streamlit as st
 
 # Perguntas organizadas por disciplina
-disciplinas = {
-    "Lógica de Programação": [
-        {
-            "pergunta": "Qual é o comando usado para exibir algo na tela em Python?",
-            "respostas": ["echo", "printf", "print", "output"],
-            "resposta_correta": "print"
-        },
-        # Adicione mais 9 perguntas aqui...
-    ],
-    "Frontend": [
-        {
-            "pergunta": "Qual tag é usada para criar um parágrafo no HTML?",
-            "respostas": ["<div>", "<p>", "<h1>", "<span>"],
-            "resposta_correta": "<p>"
-        },
-        # Adicione mais 9 perguntas aqui...
-    ],
-    "Banco de Dados": [
-        {
-            "pergunta": "Qual comando SQL é usado para selecionar dados de uma tabela?",
-            "respostas": ["INSERT", "SELECT", "UPDATE", "DELETE"],
-            "resposta_correta": "SELECT"
-        },
-        # Adicione mais 9 perguntas aqui...
-    ],
-    "TypeScript": [
-        {
-            "pergunta": "O que é TypeScript?",
-            "respostas": [
-                "Um framework de frontend",
-                "Uma linguagem baseada em JavaScript com tipagem estática opcional",
-                "Uma biblioteca de desenvolvimento backend",
-                "Um sistema de banco de dados"
-            ],
-            "resposta_correta": "Uma linguagem baseada em JavaScript com tipagem estática opcional"
-        },
-        # Adicione mais 9 perguntas aqui...
-    ],
-    "Segurança da Informação": [
-        {
-            "pergunta": "O que é criptografia?",
-            "respostas": [
-                "O processo de proteger dados em repouso",
-                "O processo de converter dados legíveis em um formato ilegível",
-                "Uma técnica de compactação de arquivos",
-                "Uma prática de backup de dados"
-            ],
-            "resposta_correta": "O processo de converter dados legíveis em um formato ilegível"
-        },
-        # Adicione mais 9 perguntas aqui...
-    ]
-}
+perguntas_gerais = [
+    # Lógica de Programação
+    {
+        "pergunta": "Qual é o comando usado para exibir algo na tela em Python?",
+        "respostas": ["echo", "printf", "print", "output"],
+        "resposta_correta": "print"
+    },
+    {
+        "pergunta": "Qual desses é um tipo de dado primitivo em Python?",
+        "respostas": ["Lista", "Dicionário", "Inteiro", "Conjunto"],
+        "resposta_correta": "Inteiro"
+    },
+    {
+        "pergunta": "Qual é a estrutura de controle que permite repetir um bloco de código várias vezes?",
+        "respostas": ["if", "else", "for", "def"],
+        "resposta_correta": "for"
+    },
+    # Frontend
+    {
+        "pergunta": "Qual tag é usada para criar um parágrafo no HTML?",
+        "respostas": ["<div>", "<p>", "<h1>", "<span>"],
+        "resposta_correta": "<p>"
+    },
+    {
+        "pergunta": "Qual propriedade CSS é usada para alterar a cor de fundo de um elemento?",
+        "respostas": ["background-color", "color", "border", "font-style"],
+        "resposta_correta": "background-color"
+    },
+    {
+        "pergunta": "Qual tecnologia é usada para criar comportamento dinâmico em páginas da web?",
+        "respostas": ["HTML", "CSS", "JavaScript", "SQL"],
+        "resposta_correta": "JavaScript"
+    },
+    # Banco de Dados
+    {
+        "pergunta": "Qual comando SQL é usado para selecionar dados de uma tabela?",
+        "respostas": ["INSERT", "SELECT", "UPDATE", "DELETE"],
+        "resposta_correta": "SELECT"
+    },
+    {
+        "pergunta": "O que significa a sigla SQL?",
+        "respostas": ["Simple Query Language", "Structured Query Language", "Secure Query Language", "Server Query Language"],
+        "resposta_correta": "Structured Query Language"
+    },
+    {
+        "pergunta": "Qual comando SQL é usado para adicionar um registro em uma tabela?",
+        "respostas": ["ADD", "INSERT INTO", "APPEND", "CREATE"],
+        "resposta_correta": "INSERT INTO"
+    },
+    {
+        "pergunta": "Em qual tipo de banco de dados as informações são organizadas em tabelas?",
+        "respostas": ["NoSQL", "Relacional", "Hierárquico", "Em cache"],
+        "resposta_correta": "Relacional"
+    }
+]
 
 # Função principal do Streamlit
 def app():
-    st.title("Quiz Interativo por Disciplina")
+    st.title("Quiz Interativo de Estudo")
+    st.write("Responda às perguntas e veja seu resultado no final! Boa sorte! 🎉")
 
-    # Inicializar estado de sessão para a disciplina
-    if 'disciplina_escolhida' not in st.session_state:
-        st.session_state.disciplina_escolhida = None
+    # Inicializar o estado da sessão
+    if "quiz_iniciado" not in st.session_state:
+        st.session_state.quiz_iniciado = False
+        st.session_state.perguntas_sorteadas = []
+        st.session_state.pergunta_atual = 0
+        st.session_state.respostas_usuario = []
+        st.session_state.pontuacao = 0
 
-    # Seleção da disciplina (se não houver uma já selecionada)
-    if st.session_state.disciplina_escolhida is None:
-        disciplina = st.selectbox(
-            "Escolha a disciplina que deseja estudar:", 
-            list(disciplinas.keys())
-        )
-        if st.button("Confirmar Disciplina"):  # Só define a disciplina ao clicar no botão
-            st.session_state.disciplina_escolhida = disciplina
-            st.experimental_rerun()  # Recarrega a página após selecionar
+    # Iniciar o quiz
+    if not st.session_state.quiz_iniciado:
+        if st.button("Iniciar Quiz"):
+            st.session_state.quiz_iniciado = True
+            st.session_state.perguntas_sorteadas = random.sample(perguntas_gerais, 10)
 
-    # Somente prosseguir se uma disciplina foi escolhida
-    if st.session_state.disciplina_escolhida is not None:
-        st.write(f"Você está estudando: **{st.session_state.disciplina_escolhida}**")
+    # Exibir perguntas
+    if st.session_state.quiz_iniciado and st.session_state.pergunta_atual < 10:
+        pergunta_atual = st.session_state.perguntas_sorteadas[st.session_state.pergunta_atual]
+        st.write(f"**Pergunta {st.session_state.pergunta_atual + 1}:** {pergunta_atual['pergunta']}")
 
-        # Perguntas da disciplina selecionada
-        perguntas = disciplinas[st.session_state.disciplina_escolhida]
+        # Opções de resposta
+        for opcao in pergunta_atual["respostas"]:
+            if st.button(opcao, key=f"resposta_{st.session_state.pergunta_atual}_{opcao}"):
+                st.session_state.respostas_usuario.append({
+                    "pergunta": pergunta_atual["pergunta"],
+                    "resposta_usuario": opcao,
+                    "resposta_correta": pergunta_atual["resposta_correta"]
+                })
+                if opcao == pergunta_atual["resposta_correta"]:
+                    st.session_state.pontuacao += 1
+                st.session_state.pergunta_atual += 1
 
-        # Inicializar estado da sessão para perguntas
-        if 'respostas_usuario' not in st.session_state:
-            st.session_state.respostas_usuario = []
-            st.session_state.pergunta_atual = 0
-            st.session_state.respondido = False
+    # Mostrar resultado ao final
+    if st.session_state.pergunta_atual == 10:
+        st.write("### Quiz Concluído!")
+        st.write(f"Você acertou {st.session_state.pontuacao} de 10 perguntas.")
 
-        # Lógica do quiz
-        pergunta_atual = st.session_state.pergunta_atual
+        # Exibir respostas corretas e do usuário
+        st.write("### Respostas:")
+        for idx, resposta in enumerate(st.session_state.respostas_usuario):
+            st.write(f"**Pergunta {idx + 1}:** {resposta['pergunta']}")
+            st.write(f"- Sua resposta: {resposta['resposta_usuario']}")
+            st.write(f"- Resposta correta: {resposta['resposta_correta']}")
 
-        if pergunta_atual < len(perguntas):
-            pergunta = perguntas[pergunta_atual]
+        # Exibir pontuação final
+        score = (st.session_state.pontuacao / 10) * 10
+        st.write(f"### Pontuação Final: {score:.1f}/10")
 
-            st.subheader(f"Pergunta {pergunta_atual + 1}: {pergunta['pergunta']}")
-
-            for opcao in pergunta["respostas"]:
-                if st.button(opcao, key=f"resposta_{pergunta_atual}_{opcao}"):
-                    st.session_state.respostas_usuario.append({
-                        "pergunta": pergunta["pergunta"],
-                        "resposta_usuario": opcao,
-                        "resposta_correta": pergunta["resposta_correta"]
-                    })
-
-                    if opcao == pergunta["resposta_correta"]:
-                        st.success("Resposta correta!")
-                    else:
-                        st.error("Resposta incorreta!")
-
-                    st.session_state.pergunta_atual += 1
-                    break
-
+        if score == 10:
+            st.success("🥳 Excelente! Você acertou todas!")
+        elif score >= 7:
+            st.success("👍 Bom trabalho!")
+        elif score >= 5:
+            st.warning("🙂 Pode melhorar. Continue praticando!")
         else:
-            st.write("Você completou o quiz!")
-            st.write(f"Acertos: {len([r for r in st.session_state.respostas_usuario if r['resposta_usuario'] == r['resposta_correta']])} de {len(perguntas)}")
-            st.write("Respostas do quiz:")
-            for r in st.session_state.respostas_usuario:
-                st.write(f"Pergunta: {r['pergunta']}")
-                st.write(f"Sua resposta: {r['resposta_usuario']} (Correta: {r['resposta_correta']})")
+            st.error("😞 Precisa estudar mais. Tente novamente!")
 
-            # Permitir reiniciar o quiz
-            if st.button("Escolher outra disciplina"):
-                del st.session_state.disciplina_escolhida
-                del st.session_state.respostas_usuario
-                del st.session_state.pergunta_atual
-                st.experimental_rerun()
+        # Botão para reiniciar o quiz
+        if st.button("Reiniciar Quiz"):
+            st.session_state.quiz_iniciado = False
+            st.session_state.perguntas_sorteadas = []
+            st.session_state.pergunta_atual = 0
+            st.session_state.respostas_usuario = []
+            st.session_state.pontuacao = 0
 
-# Rodar o app
+# Executar o app
 if __name__ == "__main__":
     app()
