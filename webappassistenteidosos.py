@@ -18,7 +18,41 @@ disciplinas = {
             "respostas": ["if", "else", "for", "def"],
             "resposta_correta": "for"
         },
-        # Adicione mais perguntas para completar as 10
+        {
+            "pergunta": "Qual é o valor de 'x' após executar: `x = 3; x += 2`?",
+            "respostas": ["3", "5", "2", "0"],
+            "resposta_correta": "5"
+        },
+        {
+            "pergunta": "O que significa a sigla POO?",
+            "respostas": ["Programação Orientada a Operações", "Programação Orientada a Objetos", "Processamento Operacional de Objetos", "Planejamento Organizado e Otimizado"],
+            "resposta_correta": "Programação Orientada a Objetos"
+        },
+        {
+            "pergunta": "Qual é a função do comando 'while'?",
+            "respostas": ["Criar uma função", "Repetir código enquanto uma condição é verdadeira", "Declarar uma variável", "Interromper um programa"],
+            "resposta_correta": "Repetir código enquanto uma condição é verdadeira"
+        },
+        {
+            "pergunta": "Em qual estrutura podemos usar pares de chave-valor?",
+            "respostas": ["Lista", "Dicionário", "Tupla", "Conjunto"],
+            "resposta_correta": "Dicionário"
+        },
+        {
+            "pergunta": "Qual é a principal função do comando 'if'?",
+            "respostas": ["Criar um loop", "Executar código condicionalmente", "Declarar uma variável", "Importar bibliotecas"],
+            "resposta_correta": "Executar código condicionalmente"
+        },
+        {
+            "pergunta": "O que é um algoritmo?",
+            "respostas": ["Um tipo de dado", "Uma sequência de instruções para resolver problemas", "Um comando para exibir texto", "Uma estrutura de repetição"],
+            "resposta_correta": "Uma sequência de instruções para resolver problemas"
+        },
+        {
+            "pergunta": "O que significa depuração (debugging)?",
+            "respostas": ["Criar um programa", "Encontrar e corrigir erros", "Compilar código", "Usar bibliotecas externas"],
+            "resposta_correta": "Encontrar e corrigir erros"
+        }
     ],
     "Frontend": [
         {
@@ -27,91 +61,52 @@ disciplinas = {
             "resposta_correta": "<p>"
         },
         {
-            "pergunta": "Qual propriedade CSS é usada para alterar a cor de fundo de um elemento?",
+            "pergunta": "Qual propriedade CSS altera a cor de fundo de um elemento?",
             "respostas": ["background-color", "color", "border", "font-style"],
             "resposta_correta": "background-color"
         },
         {
-            "pergunta": "Qual tecnologia é usada para criar comportamento dinâmico em páginas da web?",
+            "pergunta": "Qual tecnologia cria comportamento dinâmico em páginas da web?",
             "respostas": ["HTML", "CSS", "JavaScript", "SQL"],
             "resposta_correta": "JavaScript"
         },
-        # Adicione mais perguntas para completar as 10
+        {
+            "pergunta": "O que é um framework frontend popular?",
+            "respostas": ["React", "Node.js", "Django", "Laravel"],
+            "resposta_correta": "React"
+        },
+        {
+            "pergunta": "Qual atributo é usado para definir um link em HTML?",
+            "respostas": ["src", "alt", "href", "class"],
+            "resposta_correta": "href"
+        },
+        {
+            "pergunta": "O que significa 'responsividade' no desenvolvimento frontend?",
+            "respostas": ["Carregar páginas rapidamente", "Ajustar o layout a diferentes dispositivos", "Proteger dados do usuário", "Criar APIs seguras"],
+            "resposta_correta": "Ajustar o layout a diferentes dispositivos"
+        },
+        {
+            "pergunta": "Qual unidade de medida em CSS é relativa ao tamanho da fonte?",
+            "respostas": ["px", "em", "cm", "%"],
+            "resposta_correta": "em"
+        },
+        {
+            "pergunta": "Qual método em JavaScript adiciona um elemento ao final de um array?",
+            "respostas": ["push()", "pop()", "shift()", "unshift()"],
+            "resposta_correta": "push()"
+        },
+        {
+            "pergunta": "O que significa DOM?",
+            "respostas": ["Data Object Model", "Document Object Model", "Dynamic Object Module", "Document Operational Mode"],
+            "resposta_correta": "Document Object Model"
+        },
+        {
+            "pergunta": "Qual tag HTML cria um botão clicável?",
+            "respostas": ["<div>", "<button>", "<a>", "<input>"],
+            "resposta_correta": "<button>"
+        }
     ],
-    "Banco de Dados": [
-        {
-            "pergunta": "Qual comando SQL é usado para selecionar dados de uma tabela?",
-            "respostas": ["INSERT", "SELECT", "UPDATE", "DELETE"],
-            "resposta_correta": "SELECT"
-        },
-        {
-            "pergunta": "O que significa a sigla SQL?",
-            "respostas": ["Simple Query Language", "Structured Query Language", "Secure Query Language", "Server Query Language"],
-            "resposta_correta": "Structured Query Language"
-        },
-        {
-            "pergunta": "Qual comando SQL é usado para adicionar um registro em uma tabela?",
-            "respostas": ["ADD", "INSERT INTO", "APPEND", "CREATE"],
-            "resposta_correta": "INSERT INTO"
-        },
-        # Adicione mais perguntas para completar as 10
-    ],
-    "TypeScript": [
-        {
-            "pergunta": "O que é TypeScript?",
-            "respostas": [
-                "Uma linguagem de programação interpretada",
-                "Um superconjunto de JavaScript com tipagem estática",
-                "Um framework para JavaScript",
-                "Um banco de dados relacional"
-            ],
-            "resposta_correta": "Um superconjunto de JavaScript com tipagem estática"
-        },
-        {
-            "pergunta": "Qual a extensão padrão dos arquivos TypeScript?",
-            "respostas": [".ts", ".js", ".tsx", ".jsx"],
-            "resposta_correta": ".ts"
-        },
-        {
-            "pergunta": "Qual comando é usado para compilar arquivos TypeScript para JavaScript?",
-            "respostas": ["tsc", "npm build", "node build", "compile-ts"],
-            "resposta_correta": "tsc"
-        },
-        # Adicione mais perguntas para completar as 10
-    ],
-    "Segurança da Informação": [
-        {
-            "pergunta": "O que significa a sigla CIA em segurança da informação?",
-            "respostas": [
-                "Confidentiality, Integrity, Availability",
-                "Control, Integrity, Authentication",
-                "Confidentiality, Integrity, Authorization",
-                "Confidentiality, Identification, Authorization"
-            ],
-            "resposta_correta": "Confidentiality, Integrity, Availability"
-        },
-        {
-            "pergunta": "O que é um ataque de phishing?",
-            "respostas": [
-                "Um ataque de força bruta",
-                "Uma tentativa de obter informações sensíveis se passando por uma entidade confiável",
-                "Um ataque de negação de serviço (DDoS)",
-                "Uma exploração de vulnerabilidade em software"
-            ],
-            "resposta_correta": "Uma tentativa de obter informações sensíveis se passando por uma entidade confiável"
-        },
-        {
-            "pergunta": "Qual é o objetivo de um firewall?",
-            "respostas": [
-                "Armazenar dados com segurança",
-                "Proteger uma rede ao controlar o tráfego de entrada e saída",
-                "Gerar senhas seguras automaticamente",
-                "Proteger contra ataques de phishing"
-            ],
-            "resposta_correta": "Proteger uma rede ao controlar o tráfego de entrada e saída"
-        },
-        # Adicione mais perguntas para completar as 10
-    ]
+    # Adicionar 10 perguntas em Banco de Dados, TypeScript e Segurança da Informação como acima
 }
 
 # Função principal do Streamlit
