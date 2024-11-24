@@ -48,7 +48,7 @@ def app():
         st.session_state.pergunta_atual = 0
         st.session_state.respostas_usuario = []
         st.session_state.pontuacao = 0
-        st.session_state.feedback = None  # Novo estado para feedback da resposta
+        st.session_state.feedback = ""  # Inicializando o feedback como uma string vazia
 
     # Exibir perguntas
     if st.session_state.pergunta_atual < len(perguntas):
@@ -74,7 +74,7 @@ def app():
     # Exibir feedback da resposta
     if st.session_state.feedback:
         st.write(f"**Feedback:** {st.session_state.feedback}")
-        st.session_state.feedback = None  # Resetar o feedback para a próxima pergunta
+        st.session_state.feedback = ""  # Resetar feedback para a próxima pergunta
 
     # Mostrar resultados ao final
     if st.session_state.pergunta_atual == len(perguntas):
@@ -92,7 +92,7 @@ def app():
             st.session_state.pergunta_atual = 0
             st.session_state.respostas_usuario = []
             st.session_state.pontuacao = 0
-            st.session_state.feedback = None
+            st.session_state.feedback = ""  # Resetar feedback
 
 # Executar o app
 if __name__ == "__main__":
