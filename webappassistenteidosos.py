@@ -58,13 +58,22 @@ disciplinas = {
 def app():
     st.title("Quiz Interativo por Disciplina")
 
-    # Seleção da disciplina
-    disciplina_escolhida = st.selectbox("Escolha a disciplina que deseja estudar:", list(disciplinas.keys()))
+    # Inicializar estado de sessão para a disciplina
+    if 'disciplina_escolhida' not in st.session_state:
+        st.session_state.disciplina_escolhida = None
+
+    # Seleção da disciplina (se não houver uma já selecionada)
+    if st.session_state.disciplina_escolhida is None:
+        st.session_state.disciplina_escolhida = st.selectbox(
+            "Escolha a disciplina que deseja estudar:", 
+            list(disciplinas.keys())
+        )
+        st.experimental_rerun()  # Recarrega a página após selecionar
 
     # Perguntas da disciplina selecionada
-    perguntas = disciplinas[disciplina_escolhida]
+    perguntas = disciplinas[st.session_state.disciplina_escolhida]
 
-    # Inicializar estado da sessão
+    # Inicializar estado da sessão para perguntas
     if 'respostas_usuario' not in st.session_state:
         st.session_state.respostas_usuario = []
         st.session_state.pergunta_atual = 0
@@ -101,6 +110,13 @@ def app():
         for r in st.session_state.respostas_usuario:
             st.write(f"Pergunta: {r['pergunta']}")
             st.write(f"Sua resposta: {r['resposta_usuario']} (Correta: {r['resposta_correta']})")
+
+        # Permitir reiniciar o quiz
+        if st.button("Escolher outra disciplina"):
+            del st.session_state.disciplina_escolhida
+            del st.session_state.respostas_usuario
+            del st.session_state.pergunta_atual
+            st.experimental_rerun()
 
 # Rodar o app
 if __name__ == "__main__":
