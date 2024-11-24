@@ -9,6 +9,16 @@ disciplinas = {
             "resposta_correta": "print"
         },
         {
+            "pergunta": "O que significa POO?",
+            "respostas": [
+                "Programação Organizada em Objetos",
+                "Programação Orientada a Objetos",
+                "Projeto Orientado em Objetos",
+                "Prototipagem de Objetos Orientados"
+            ],
+            "resposta_correta": "Programação Orientada a Objetos"
+        },
+        {
             "pergunta": "Qual desses é um tipo de dado primitivo em Python?",
             "respostas": ["Lista", "Dicionário", "Inteiro", "Conjunto"],
             "resposta_correta": "Inteiro"
@@ -18,7 +28,51 @@ disciplinas = {
             "respostas": ["if", "else", "for", "def"],
             "resposta_correta": "for"
         },
-        # Adicione mais perguntas para completar as 10
+        {
+            "pergunta": "Qual é o valor de 'x' após executar: `x = 5; x += 2`?",
+            "respostas": ["7", "5", "2", "10"],
+            "resposta_correta": "7"
+        },
+        {
+            "pergunta": "Qual comando em Python é usado para criar uma função?",
+            "respostas": ["def", "function", "create", "func"],
+            "resposta_correta": "def"
+        },
+        {
+            "pergunta": "O que é um loop infinito?",
+            "respostas": [
+                "Um loop que nunca termina",
+                "Um loop que termina após um número fixo de iterações",
+                "Um loop usado apenas em funções",
+                "Um tipo de estrutura condicional"
+            ],
+            "resposta_correta": "Um loop que nunca termina"
+        },
+        {
+            "pergunta": "Em qual tipo de estrutura podemos armazenar pares de chave e valor?",
+            "respostas": ["Lista", "Dicionário", "Tupla", "Conjunto"],
+            "resposta_correta": "Dicionário"
+        },
+        {
+            "pergunta": "Qual é a principal função do comando 'if'?",
+            "respostas": [
+                "Executar repetidamente um código",
+                "Executar um código condicionalmente",
+                "Definir uma variável",
+                "Criar um loop"
+            ],
+            "resposta_correta": "Executar um código condicionalmente"
+        },
+        {
+            "pergunta": "O que é um algoritmo?",
+            "respostas": [
+                "Um tipo de dado",
+                "Uma sequência de instruções para resolver um problema",
+                "Um comando para exibir na tela",
+                "Uma estrutura de repetição"
+            ],
+            "resposta_correta": "Uma sequência de instruções para resolver um problema"
+        }
     ],
     "Frontend": [
         {
@@ -27,16 +81,65 @@ disciplinas = {
             "resposta_correta": "<p>"
         },
         {
-            "pergunta": "Qual propriedade CSS é usada para alterar a cor de fundo de um elemento?",
-            "respostas": ["background-color", "color", "border", "font-style"],
-            "resposta_correta": "background-color"
+            "pergunta": "Qual propriedade CSS altera a cor do texto?",
+            "respostas": ["text-color", "color", "font-color", "background-color"],
+            "resposta_correta": "color"
+        },
+        {
+            "pergunta": "O que significa HTML?",
+            "respostas": [
+                "Hyperlinks and Text Markup Language",
+                "HyperText Markup Language",
+                "HighText Markup Language",
+                "HyperText Machine Language"
+            ],
+            "resposta_correta": "HyperText Markup Language"
+        },
+        {
+            "pergunta": "Qual propriedade CSS é usada para centralizar texto?",
+            "respostas": ["text-align", "center", "justify", "align"],
+            "resposta_correta": "text-align"
+        },
+        {
+            "pergunta": "Qual tag HTML é usada para criar links?",
+            "respostas": ["<link>", "<a>", "<href>", "<url>"],
+            "resposta_correta": "<a>"
         },
         {
             "pergunta": "Qual tecnologia é usada para criar comportamento dinâmico em páginas da web?",
             "respostas": ["HTML", "CSS", "JavaScript", "SQL"],
             "resposta_correta": "JavaScript"
         },
-        # Adicione mais perguntas para completar as 10
+        {
+            "pergunta": "Qual unidade CSS é relativa ao tamanho da fonte do elemento pai?",
+            "respostas": ["px", "em", "%", "vh"],
+            "resposta_correta": "em"
+        },
+        {
+            "pergunta": "O que faz o atributo 'alt' na tag <img>?",
+            "respostas": [
+                "Define o texto alternativo para a imagem",
+                "Altera a largura da imagem",
+                "Remove a borda da imagem",
+                "Define o alinhamento da imagem"
+            ],
+            "resposta_correta": "Define o texto alternativo para a imagem"
+        },
+        {
+            "pergunta": "Qual é o propósito do modelo de caixa (box model) no CSS?",
+            "respostas": [
+                "Definir margens, bordas, preenchimentos e o conteúdo de um elemento",
+                "Gerenciar apenas o conteúdo do elemento",
+                "Criar animações no elemento",
+                "Alterar apenas as cores do elemento"
+            ],
+            "resposta_correta": "Definir margens, bordas, preenchimentos e o conteúdo de um elemento"
+        },
+        {
+            "pergunta": "Qual tag HTML é usada para criar tabelas?",
+            "respostas": ["<table>", "<td>", "<tr>", "<tbody>"],
+            "resposta_correta": "<table>"
+        }
     ],
     "Banco de Dados": [
         {
@@ -46,7 +149,12 @@ disciplinas = {
         },
         {
             "pergunta": "O que significa a sigla SQL?",
-            "respostas": ["Simple Query Language", "Structured Query Language", "Secure Query Language", "Server Query Language"],
+            "respostas": [
+                "Simple Query Language",
+                "Structured Query Language",
+                "Secure Query Language",
+                "Server Query Language"
+            ],
             "resposta_correta": "Structured Query Language"
         },
         {
@@ -54,114 +162,57 @@ disciplinas = {
             "respostas": ["ADD", "INSERT INTO", "APPEND", "CREATE"],
             "resposta_correta": "INSERT INTO"
         },
-        # Adicione mais perguntas para completar as 10
-    ],
-    "TypeScript": [
         {
-            "pergunta": "O que é TypeScript?",
+            "pergunta": "Qual palavra-chave SQL é usada para evitar registros duplicados?",
+            "respostas": ["DISTINCT", "UNIQUE", "FILTER", "LIMIT"],
+            "resposta_correta": "DISTINCT"
+        },
+        {
+            "pergunta": "Qual comando SQL exclui uma tabela?",
+            "respostas": ["DROP", "DELETE", "REMOVE", "TRUNCATE"],
+            "resposta_correta": "DROP"
+        },
+        {
+            "pergunta": "O que é uma chave primária (PRIMARY KEY)?",
             "respostas": [
-                "Uma linguagem de programação interpretada",
-                "Um superconjunto de JavaScript com tipagem estática",
-                "Um framework para JavaScript",
-                "Um banco de dados relacional"
+                "Uma coluna usada para referenciar outra tabela",
+                "Uma coluna ou conjunto de colunas que identificam unicamente uma linha",
+                "Uma restrição para valores duplicados",
+                "Uma palavra-chave para selecionar dados"
             ],
-            "resposta_correta": "Um superconjunto de JavaScript com tipagem estática"
+            "resposta_correta": "Uma coluna ou conjunto de colunas que identificam unicamente uma linha"
         },
         {
-            "pergunta": "Qual a extensão padrão dos arquivos TypeScript?",
-            "respostas": [".ts", ".js", ".tsx", ".jsx"],
-            "resposta_correta": ".ts"
+            "pergunta": "Qual comando SQL atualiza dados em uma tabela?",
+            "respostas": ["MODIFY", "UPDATE", "SET", "ALTER"],
+            "resposta_correta": "UPDATE"
         },
         {
-            "pergunta": "Qual comando é usado para compilar arquivos TypeScript para JavaScript?",
-            "respostas": ["tsc", "npm build", "node build", "compile-ts"],
-            "resposta_correta": "tsc"
-        },
-        # Adicione mais perguntas para completar as 10
-    ],
-    "Segurança da Informação": [
-        {
-            "pergunta": "O que significa a sigla CIA em segurança da informação?",
+            "pergunta": "O que é normalização em Banco de Dados?",
             "respostas": [
-                "Confidentiality, Integrity, Availability",
-                "Control, Integrity, Authentication",
-                "Confidentiality, Integrity, Authorization",
-                "Confidentiality, Identification, Authorization"
+                "O processo de organizar dados para minimizar redundâncias",
+                "A criação de tabelas temporárias",
+                "A replicação de dados entre tabelas",
+                "O uso de chaves estrangeiras"
             ],
-            "resposta_correta": "Confidentiality, Integrity, Availability"
+            "resposta_correta": "O processo de organizar dados para minimizar redundâncias"
         },
         {
-            "pergunta": "O que é um ataque de phishing?",
+            "pergunta": "O que faz o comando SQL 'JOIN'?",
             "respostas": [
-                "Um ataque de força bruta",
-                "Uma tentativa de obter informações sensíveis se passando por uma entidade confiável",
-                "Um ataque de negação de serviço (DDoS)",
-                "Uma exploração de vulnerabilidade em software"
+                "Exclui registros duplicados",
+                "Combina registros de várias tabelas com base em uma condição",
+                "Cria um índice na tabela",
+                "Divide os registros de uma tabela"
             ],
-            "resposta_correta": "Uma tentativa de obter informações sensíveis se passando por uma entidade confiável"
+            "resposta_correta": "Combina registros de várias tabelas com base em uma condição"
         },
         {
-            "pergunta": "Qual é o objetivo de um firewall?",
+            "pergunta": "Qual é a diferença entre 'INNER JOIN' e 'OUTER JOIN'?",
             "respostas": [
-                "Armazenar dados com segurança",
-                "Proteger uma rede ao controlar o tráfego de entrada e saída",
-                "Gerar senhas seguras automaticamente",
-                "Proteger contra ataques de phishing"
+                "INNER JOIN retorna apenas os registros correspondentes; OUTER JOIN retorna todos os registros de ambas as tabelas",
+                "INNER JOIN retorna duplicatas; OUTER JOIN não",
+                "INNER JOIN é mais rápido que OUTER JOIN",
+                "Não há diferença"
             ],
-            "resposta_correta": "Proteger uma rede ao controlar o tráfego de entrada e saída"
-        },
-        # Adicione mais perguntas para completar as 10
-    ]
-}
-
-# Função principal do Streamlit
-def app():
-    st.title("Quiz Interativo de Estudo")
-    st.write("Escolha uma disciplina e teste seus conhecimentos! 🎓")
-
-    # Selecionar disciplina
-    disciplina_escolhida = st.selectbox("Selecione uma disciplina", list(disciplinas.keys()))
-    perguntas = disciplinas[disciplina_escolhida]
-
-    # Inicializar estado de sessão
-    if 'pergunta_atual' not in st.session_state:
-        st.session_state.pergunta_atual = 0
-        st.session_state.respostas_usuario = []
-        st.session_state.pontuacao = 0
-
-    # Exibir perguntas
-    if st.session_state.pergunta_atual < len(perguntas):
-        pergunta_atual = perguntas[st.session_state.pergunta_atual]
-        st.write(f"**Pergunta {st.session_state.pergunta_atual + 1}:** {pergunta_atual['pergunta']}")
-
-        for opcao in pergunta_atual["respostas"]:
-            if st.button(opcao, key=f"resposta_{st.session_state.pergunta_atual}_{opcao}"):
-                st.session_state.respostas_usuario.append({
-                    "pergunta": pergunta_atual["pergunta"],
-                    "resposta_usuario": opcao,
-                    "resposta_correta": pergunta_atual["resposta_correta"]
-                })
-                if opcao == pergunta_atual["resposta_correta"]:
-                    st.session_state.pontuacao += 1
-                st.session_state.pergunta_atual += 1
-
-    # Mostrar resultados ao final
-    if st.session_state.pergunta_atual == len(perguntas):
-        st.write("### Quiz Concluído!")
-        st.write(f"Você acertou {st.session_state.pontuacao} de {len(perguntas)} perguntas.")
-
-        st.write("### Respostas:")
-        for idx, resposta in enumerate(st.session_state.respostas_usuario):
-            st.write(f"**Pergunta {idx + 1}:** {resposta['pergunta']}")
-            st.write(f"- Sua resposta: {resposta['resposta_usuario']}")
-            st.write(f"- Resposta correta: {resposta['resposta_correta']}")
-
-        # Reiniciar quiz
-        if st.button("Reiniciar"):
-            st.session_state.pergunta_atual = 0
-            st.session_state.respostas_usuario = []
-            st.session_state.pontuacao = 0
-
-# Executar o app
-if __name__ == "__main__":
-    app()
+            "resposta_c
