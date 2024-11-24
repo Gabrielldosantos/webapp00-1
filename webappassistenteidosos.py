@@ -6,7 +6,13 @@ disciplinas = {
         {"pergunta": "Qual é o comando usado para exibir algo na tela em Python?", "respostas": ["echo", "printf", "print", "output"], "resposta_correta": "print"},
         {"pergunta": "Qual desses é um tipo de dado primitivo em Python?", "respostas": ["Lista", "Dicionário", "Inteiro", "Conjunto"], "resposta_correta": "Inteiro"},
         {"pergunta": "Qual é a estrutura de controle que permite repetir um bloco de código várias vezes?", "respostas": ["if", "else", "for", "def"], "resposta_correta": "for"},
-          
+        {"pergunta": "O que é uma variável em programação?", "respostas": ["Um tipo de dado", "Uma referência para armazenar dados", "Uma função", "Um comando"], "resposta_correta": "Uma referência para armazenar dados"},  
+        {"pergunta": "Qual é a diferença entre listas e tuplas em Python?", "respostas": ["Listas são imutáveis, tuplas são mutáveis", "Tuplas são imutáveis, listas são mutáveis", "Listas e tuplas são ambas mutáveis", "Nenhuma das alternativas"], "resposta_correta": "Tuplas são imutáveis, listas são mutáveis"},
+        {"pergunta": "O que é uma função em Python?", "respostas": ["Um tipo de dado", "Um comando que repete uma operação", "Um bloco de código que executa uma tarefa específica", "Uma estrutura de controle"], "resposta_correta": "Um bloco de código que executa uma tarefa específica"},
+        {"pergunta": "Qual é a finalidade do comando `return` em uma função?", "respostas": ["Para retornar um valor de uma função", "Para fazer um loop", "Para imprimir um valor", "Para encerrar a execução do programa"], "resposta_correta": "Para retornar um valor de uma função"},
+        {"pergunta": "Qual é a finalidade do comando `return` em uma função?", "respostas": ["Para retornar um valor de uma função", "Para fazer um loop", "Para imprimir um valor", "Para encerrar a execução do programa"], "resposta_correta": "Para retornar um valor de uma função"},
+        {"pergunta": "Qual estrutura de controle é usada para verificar se uma condição é verdadeira ou falsa?", "respostas": ["for", "if", "while", "try"], "resposta_correta": "if"},
+        {"pergunta": "O que é um dicionário em Python?", "respostas": ["Um tipo de dado que armazena pares de chave-valor", "Um tipo de dado que armazena elementos em ordem", "Uma estrutura de controle", "Um comando de repetição"], "resposta_correta": "Um tipo de dado que armazena pares de chave-valor"},
         # Adicione mais perguntas para completar as 10
     ],
     "Frontend": [
