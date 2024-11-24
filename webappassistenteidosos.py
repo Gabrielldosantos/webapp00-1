@@ -8,7 +8,7 @@ disciplinas = {
             "respostas": ["echo", "printf", "print", "output"],
             "resposta_correta": "print"
         },
-        # ... mais 9 perguntas de lógica de programação
+        # Adicione mais 9 perguntas aqui...
     ],
     "Frontend": [
         {
@@ -16,7 +16,7 @@ disciplinas = {
             "respostas": ["<div>", "<p>", "<h1>", "<span>"],
             "resposta_correta": "<p>"
         },
-        # ... mais 9 perguntas de Frontend
+        # Adicione mais 9 perguntas aqui...
     ],
     "Banco de Dados": [
         {
@@ -24,7 +24,7 @@ disciplinas = {
             "respostas": ["INSERT", "SELECT", "UPDATE", "DELETE"],
             "resposta_correta": "SELECT"
         },
-        # ... mais 9 perguntas de Banco de Dados
+        # Adicione mais 9 perguntas aqui...
     ],
     "TypeScript": [
         {
@@ -37,7 +37,7 @@ disciplinas = {
             ],
             "resposta_correta": "Uma linguagem baseada em JavaScript com tipagem estática opcional"
         },
-        # ... mais 9 perguntas de TypeScript
+        # Adicione mais 9 perguntas aqui...
     ],
     "Segurança da Informação": [
         {
@@ -50,7 +50,7 @@ disciplinas = {
             ],
             "resposta_correta": "O processo de converter dados legíveis em um formato ilegível"
         },
-        # ... mais 9 perguntas de Segurança da Informação
+        # Adicione mais 9 perguntas aqui...
     ]
 }
 
@@ -64,59 +64,65 @@ def app():
 
     # Seleção da disciplina (se não houver uma já selecionada)
     if st.session_state.disciplina_escolhida is None:
-        st.session_state.disciplina_escolhida = st.selectbox(
+        disciplina = st.selectbox(
             "Escolha a disciplina que deseja estudar:", 
             list(disciplinas.keys())
         )
-        st.experimental_rerun()  # Recarrega a página após selecionar
+        if st.button("Confirmar Disciplina"):  # Só define a disciplina ao clicar no botão
+            st.session_state.disciplina_escolhida = disciplina
+            st.experimental_rerun()  # Recarrega a página após selecionar
 
-    # Perguntas da disciplina selecionada
-    perguntas = disciplinas[st.session_state.disciplina_escolhida]
+    # Somente prosseguir se uma disciplina foi escolhida
+    if st.session_state.disciplina_escolhida is not None:
+        st.write(f"Você está estudando: **{st.session_state.disciplina_escolhida}**")
 
-    # Inicializar estado da sessão para perguntas
-    if 'respostas_usuario' not in st.session_state:
-        st.session_state.respostas_usuario = []
-        st.session_state.pergunta_atual = 0
-        st.session_state.respondido = False
+        # Perguntas da disciplina selecionada
+        perguntas = disciplinas[st.session_state.disciplina_escolhida]
 
-    # Lógica do quiz
-    pergunta_atual = st.session_state.pergunta_atual
+        # Inicializar estado da sessão para perguntas
+        if 'respostas_usuario' not in st.session_state:
+            st.session_state.respostas_usuario = []
+            st.session_state.pergunta_atual = 0
+            st.session_state.respondido = False
 
-    if pergunta_atual < len(perguntas):
-        pergunta = perguntas[pergunta_atual]
+        # Lógica do quiz
+        pergunta_atual = st.session_state.pergunta_atual
 
-        st.subheader(f"Pergunta {pergunta_atual + 1}: {pergunta['pergunta']}")
+        if pergunta_atual < len(perguntas):
+            pergunta = perguntas[pergunta_atual]
 
-        for opcao in pergunta["respostas"]:
-            if st.button(opcao, key=f"resposta_{pergunta_atual}_{opcao}"):
-                st.session_state.respostas_usuario.append({
-                    "pergunta": pergunta["pergunta"],
-                    "resposta_usuario": opcao,
-                    "resposta_correta": pergunta["resposta_correta"]
-                })
+            st.subheader(f"Pergunta {pergunta_atual + 1}: {pergunta['pergunta']}")
 
-                if opcao == pergunta["resposta_correta"]:
-                    st.success("Resposta correta!")
-                else:
-                    st.error("Resposta incorreta!")
+            for opcao in pergunta["respostas"]:
+                if st.button(opcao, key=f"resposta_{pergunta_atual}_{opcao}"):
+                    st.session_state.respostas_usuario.append({
+                        "pergunta": pergunta["pergunta"],
+                        "resposta_usuario": opcao,
+                        "resposta_correta": pergunta["resposta_correta"]
+                    })
 
-                st.session_state.pergunta_atual += 1
-                break
+                    if opcao == pergunta["resposta_correta"]:
+                        st.success("Resposta correta!")
+                    else:
+                        st.error("Resposta incorreta!")
 
-    else:
-        st.write("Você completou o quiz!")
-        st.write(f"Acertos: {len([r for r in st.session_state.respostas_usuario if r['resposta_usuario'] == r['resposta_correta']])} de {len(perguntas)}")
-        st.write("Respostas do quiz:")
-        for r in st.session_state.respostas_usuario:
-            st.write(f"Pergunta: {r['pergunta']}")
-            st.write(f"Sua resposta: {r['resposta_usuario']} (Correta: {r['resposta_correta']})")
+                    st.session_state.pergunta_atual += 1
+                    break
 
-        # Permitir reiniciar o quiz
-        if st.button("Escolher outra disciplina"):
-            del st.session_state.disciplina_escolhida
-            del st.session_state.respostas_usuario
-            del st.session_state.pergunta_atual
-            st.experimental_rerun()
+        else:
+            st.write("Você completou o quiz!")
+            st.write(f"Acertos: {len([r for r in st.session_state.respostas_usuario if r['resposta_usuario'] == r['resposta_correta']])} de {len(perguntas)}")
+            st.write("Respostas do quiz:")
+            for r in st.session_state.respostas_usuario:
+                st.write(f"Pergunta: {r['pergunta']}")
+                st.write(f"Sua resposta: {r['resposta_usuario']} (Correta: {r['resposta_correta']})")
+
+            # Permitir reiniciar o quiz
+            if st.button("Escolher outra disciplina"):
+                del st.session_state.disciplina_escolhida
+                del st.session_state.respostas_usuario
+                del st.session_state.pergunta_atual
+                st.experimental_rerun()
 
 # Rodar o app
 if __name__ == "__main__":
