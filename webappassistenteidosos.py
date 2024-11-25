@@ -82,11 +82,11 @@ def app():
                 perguntas = disciplinas[disciplina_escolhida]
 
 # Inicializar estado de sessão
-    if 'pergunta_atual' not in st.session_state:
-        st.session_state.pergunta_atual = 0
-        st.session_state.respostas_usuario = []
-        st.session_state.pontuacao = 0
-        st.session_state.feedback = ""  # Inicializando o feedback como uma string vazia
+            if 'pergunta_atual' not in st.session_state:
+                st.session_state.pergunta_atual = 0
+                st.session_state.respostas_usuario = []
+                st.session_state.pontuacao = 0
+                st.session_state.feedback = ""  # Inicializando o feedback como uma string vazia
     
 # Exibir perguntas
             if st.session_state.pergunta_atual < len(perguntas):
