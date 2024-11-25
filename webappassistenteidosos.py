@@ -73,7 +73,6 @@ disciplinas = {
 ]}
 
 # Função principal do Streamlit
-            def app:
                 st.title("Quiz Interativo de Estudo")
                 st.write("Escolha uma disciplina e teste seus conhecimentos! 🎓")
 
