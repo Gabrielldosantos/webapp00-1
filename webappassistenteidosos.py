@@ -1,9 +1,5 @@
 import streamlit as st
 
-pergunta_atual = perguntas[st.session_state.pergunta_atual]
-# Destacando a palavra "pergunta" em vermelho
-st.markdown(f"**<span style='color:red;'>Pergunta {st.session_state.pergunta_atual + 1}:</span>** {pergunta_atual['pergunta']}", unsafe_allow_html=True)
-
 # Perguntas organizadas por disciplina
 disciplinas = {
     "Lógica de Programação": [
