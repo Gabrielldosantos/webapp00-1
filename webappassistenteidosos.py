@@ -110,10 +110,6 @@ def app():
                 })
                 st.session_state.pergunta_atual += 1
 
-    # Exibir feedback da resposta
-    if st.session_state.feedback:
-        st.write(f"**Feedback:** {st.session_state.feedback}")
-        st.session_state.feedback = ""  # Resetar feedback para a próxima pergunta
 
     # Mostrar resultados ao final
     if st.session_state.pergunta_atual == len(perguntas):
