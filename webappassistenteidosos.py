@@ -87,6 +87,12 @@ def app():
         st.session_state.pontuacao = 0
         st.session_state.feedback = ""  # Inicializando o feedback como uma string vazia
 
+	# Exibir barra de progresso
+if st.session_state.pergunta_atual < len(perguntas):
+    progresso = (st.session_state.pergunta_atual + 1) / len(perguntas)
+    st.progress(progresso)  # Mostra a barra de progresso
+
+
     # Exibir perguntas
     if st.session_state.pergunta_atual < len(perguntas):
         pergunta_atual = perguntas[st.session_state.pergunta_atual]
