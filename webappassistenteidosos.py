@@ -71,42 +71,67 @@ disciplinas = {
         
 
 ]}
-
 # Função principal do Streamlit
 def app():
-                st.title("Quiz Interativo de Estudo")
-                st.write("Escolha uma disciplina e teste seus conhecimentos! 🎓")
+    st.title("Quiz Interativo de Estudo")
+    st.write("Escolha uma disciplina e teste seus conhecimentos! 🎓")
 
-# Selecionar disciplina
-                disciplina_escolhida = st.selectbox("Selecione uma disciplina", list(disciplinas.keys()))
-                perguntas = disciplinas[disciplina_escolhida]
+    # Selecionar disciplina
+    disciplina_escolhida = st.selectbox("Selecione uma disciplina", list(disciplinas.keys()))
+    perguntas = disciplinas[disciplina_escolhida]
 
-# Inicializar estado de sessão
-     if 'pergunta_atual' not in st.session_state:
-    st.session_state.pergunta_atual = 0
-    st.session_state.respostas_usuario = []
-    st.session_state.pontuacao = 0
-    st.session_state.feedback = ""  # Inicializando o feedback como uma string vazia
+    # Inicializar estado de sessão
+    if 'pergunta_atual' not in st.session_state:
+        st.session_state.pergunta_atual = 0
+        st.session_state.respostas_usuario = []
+        st.session_state.pontuacao = 0
+        st.session_state.feedback = ""  # Inicializando o feedback como uma string vazia
 
+    # Exibir perguntas
+    if st.session_state.pergunta_atual < len(perguntas):
+        pergunta_atual = perguntas[st.session_state.pergunta_atual]
+        st.write(f"**Pergunta {st.session_state.pergunta_atual + 1}:** {pergunta_atual['pergunta']}")
 
-# Mostrar resultados ao final
-            if  st.session_state.pergunta_atual == len(perguntas):
-                st.write("### Quiz Concluído!")
-                st.write(f"Você acertou {st.session_state.pontuacao} de {len(perguntas)} perguntas.")
+        for opcao in pergunta_atual["respostas"]:
+            if st.button(opcao, key=f"resposta_{st.session_state.pergunta_atual}_{opcao}"):
+                # Verificar se a resposta está correta
+                if opcao == pergunta_atual["resposta_correta"]:
+                    st.session_state.feedback = "Correto!"
+                    st.session_state.pontuacao += 1
+                else:
+                    st.session_state.feedback = f"Errado! A resposta correta era: {pergunta_atual['resposta_correta']}"
+                
+                st.session_state.respostas_usuario.append({
+                    "pergunta": pergunta_atual["pergunta"],
+                    "resposta_usuario": opcao,
+                    "resposta_correta": pergunta_atual["resposta_correta"]
+                })
+                st.session_state.pergunta_atual += 1
 
-                st.write("### Respostas:")
-            for idx, resposta in enumerate(st.session_state.respostas_usuario):
-                st.write(f"**Pergunta {idx + 1}:** {resposta['pergunta']}")
-                st.write(f"- Sua resposta: {resposta['resposta_usuario']}")
-                st.write(f"- Resposta correta: {resposta['resposta_correta']}")
+    # Exibir feedback da resposta
+    if st.session_state.feedback:
+        st.write(f"**Feedback:** {st.session_state.feedback}")
+        st.session_state.feedback = ""  # Resetar feedback para a próxima pergunta
 
-# Reiniciar quiz
-            if st.button("Reiniciar"):
-                st.session_state.pergunta_atual = 0
-                st.session_state.respostas_usuario = []
-                st.session_state.pontuacao = 0
-                st.session_state.feedback = ""  # Resetar feedback
+    # Mostrar resultados ao final
+    if st.session_state.pergunta_atual == len(perguntas):
+        st.write("### Quiz Concluído!")
+        st.write(f"Você acertou {st.session_state.pontuacao} de {len(perguntas)} perguntas.")
+
+        st.write("### Respostas:")
+        for idx, resposta in enumerate(st.session_state.respostas_usuario):
+            st.write(f"**Pergunta {idx + 1}:** {resposta['pergunta']}")
+            st.write(f"- Sua resposta: {resposta['resposta_usuario']}")
+            st.write(f"- Resposta correta: {resposta['resposta_correta']}")
+
+        # Reiniciar quiz
+        if st.button("Reiniciar"):
+            st.session_state.pergunta_atual = 0
+            st.session_state.respostas_usuario = []
+            st.session_state.pontuacao = 0
+            st.session_state.feedback = ""  # Resetar feedback
 
 # Executar o app
-            if __name__ == "__main__":
-                app()
+if __name__ == "__main__":
+    app()
+	
