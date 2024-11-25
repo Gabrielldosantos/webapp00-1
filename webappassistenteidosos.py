@@ -14,7 +14,7 @@ disciplinas = {
         {"pergunta": "Qual estrutura de controle é usada para verificar se uma condição é verdadeira ou falsa?", "respostas": ["for", "if", "while", "try"], "resposta_correta": "if"},
         {"pergunta": "O que é um dicionário em Python?", "respostas": ["Um tipo de dado que armazena pares de chave-valor", "Um tipo de dado que armazena elementos em ordem", "Uma estrutura de controle", "Um comando de repetição"], "resposta_correta": "Um tipo de dado que armazena pares de chave-valor"},
         
-    ],
+],
     "Frontend": [
         {"pergunta": "Qual tag é usada para criar um parágrafo no HTML?", "respostas": ["<div>", "<p>", "<h1>", "<span>"], "resposta_correta": "<p>"},
         {"pergunta": "Qual propriedade CSS é usada para alterar a cor de fundo de um elemento?", "respostas": ["background-color", "color", "border", "font-style"], "resposta_correta": "background-color"},
@@ -28,7 +28,7 @@ disciplinas = {
         {"pergunta": "Qual atributo CSS é usado para esconder completamente um elemento na página?", "respostas": ["display: none;", "visibility: hidden;", "opacity: 0;", "hidden: true;"], "resposta_correta": "display: none;"}
         
 
-    ],
+],
     "Banco de Dados": [
         {"pergunta": "Qual comando SQL é usado para selecionar dados de uma tabela?", "respostas": ["INSERT", "SELECT", "UPDATE", "DELETE"], "resposta_correta": "SELECT"},
         {"pergunta": "O que significa a sigla SQL?", "respostas": ["Simple Query Language", "Structured Query Language", "Secure Query Language", "Server Query Language"], "resposta_correta": "Structured Query Language"},
@@ -42,7 +42,7 @@ disciplinas = {
         {"pergunta": "Qual comando SQL é usado para juntar dados de várias tabelas?", "respostas": ["JOIN", "UNION", "COMBINE", "MERGE"], "resposta_correta": "JOIN"}
         
         
-    ],
+],
     "TypeScript": [
         {"pergunta": "O que é TypeScript?", "respostas": ["Uma linguagem de programação interpretada", "Um superconjunto de JavaScript com tipagem estática", "Um framework para JavaScript", "Um banco de dados relacional"], "resposta_correta": "Um superconjunto de JavaScript com tipagem estática"},
         {"pergunta": "Qual a extensão padrão dos arquivos TypeScript?", "respostas": [".ts", ".js", ".tsx", ".jsx"], "resposta_correta": ".ts"},
@@ -56,7 +56,7 @@ disciplinas = {
         {"pergunta": "Qual funcionalidade do TypeScript ajuda a detectar erros antes da execução?", "respostas": ["Tipagem estática", "Polimorfismo", "Renderização no servidor", "Closures"], "resposta_correta": "Tipagem estática"}
         
 
-    ],
+],
     "Segurança da Informação": [
         {"pergunta": "O que significa a sigla CIA em segurança da informação?", "respostas": ["Confidentiality, Integrity, Availability", "Control, Integrity, Authentication", "Confidentiality, Integrity, Authorization", "Confidentiality, Identification, Authorization"], "resposta_correta": "Confidentiality, Integrity, Availability"},
         {"pergunta": "O que é um ataque de phishing?", "respostas": ["Um ataque de força bruta", "Uma tentativa de obter informações sensíveis se passando por uma entidade confiável", "Um ataque de negação de serviço (DDoS)", "Uma exploração de vulnerabilidade em software"], "resposta_correta": "Uma tentativa de obter informações sensíveis se passando por uma entidade confiável"},
@@ -70,65 +70,65 @@ disciplinas = {
         {"pergunta": "Qual das opções é considerada uma vulnerabilidade de segurança?", "respostas": ["Uso de firewalls", "Senhas fracas", "Atualização de softwares", "Criptografia de dados"], "resposta_correta": "Senhas fracas"}
         
 
-    ]
-}
+]}
 
 # Função principal do Streamlit
-def app():
-    st.title("Quiz Interativo de Estudo")
-    st.write("Escolha uma disciplina e teste seus conhecimentos! 🎓")
+            def app():
+                st.title("Quiz Interativo de Estudo")
+                st.write("Escolha uma disciplina e teste seus conhecimentos! 🎓")
 
-    # Selecionar disciplina
-    disciplina_escolhida = st.selectbox("Selecione uma disciplina", list(disciplinas.keys()))
-    perguntas = disciplinas[disciplina_escolhida]
+# Selecionar disciplina
+                disciplina_escolhida = st.selectbox("Selecione uma disciplina", list(disciplinas.keys()))
+                perguntas = disciplinas[disciplina_escolhida]
 
-    # Inicializar estado de sessão
-    if 'pergunta_atual' not in st.session_state:
-        st.session_state.pergunta_atual = 0
-        st.session_state.respostas_usuario = []
-        st.session_state.pontuacao = 0
-        st.session_state.feedback = ""  # Inicializando o feedback como uma string vazia
+# Inicializar estado de sessão
+            if 'pergunta_atual' not in st.session_state:
+                st.session_state.pergunta_atual = 0
+                st.session_state.respostas_usuario = []
+                st.session_state.pontuacao = 0
+                st.session_state.feedback = ""  # Inicializando o feedback como uma string vazia
 
-    # Exibir perguntas
-    if st.session_state.pergunta_atual < len(perguntas):
-        pergunta_atual = perguntas[st.session_state.pergunta_atual]
-        st.write(f"**Pergunta {st.session_state.pergunta_atual + 1}:** {pergunta_atual['pergunta']}")
+    
+# Exibir perguntas
+            if st.session_state.pergunta_atual < len(perguntas):
+                pergunta_atual = perguntas[st.session_state.pergunta_atual]
+                st.write(f"**Pergunta {st.session_state.pergunta_atual + 1}:** {pergunta_atual['pergunta']}")
 
-        for opcao in pergunta_atual["respostas"]:
-            if st.button(opcao, key=f"resposta_{st.session_state.pergunta_atual}_{opcao}"):
-                # Verificar se a resposta está correta
-                if opcao == pergunta_atual["resposta_correta"]:
-                    st.session_state.feedback = "Correto!"
-                    st.session_state.pontuacao += 1
-                else:
-                    st.session_state.feedback = f"Errado! A resposta correta era: {pergunta_atual['resposta_correta']}"
+            for opcao in pergunta_atual["respostas"]:
+                if st.button(opcao, key=f"resposta_{st.session_state.pergunta_atual}_{opcao}"):
+# Verificar se a resposta está correta
+            if opcao == pergunta_atual["resposta_correta"]:
+                st.session_state.feedback = "Correto!"
+                st.session_state.pontuacao += 1
+            else:
+                st.session_state.feedback = f"Errado! A resposta correta era: {pergunta_atual['resposta_correta']}"
                 
                 st.session_state.respostas_usuario.append({
                     "pergunta": pergunta_atual["pergunta"],
                     "resposta_usuario": opcao,
                     "resposta_correta": pergunta_atual["resposta_correta"]
-                })
-                st.session_state.pergunta_atual += 1
+})
+                    st.session_state.pergunta_atual += 1
 
 
-    # Mostrar resultados ao final
-    if st.session_state.pergunta_atual == len(perguntas):
-        st.write("### Quiz Concluído!")
-        st.write(f"Você acertou {st.session_state.pontuacao} de {len(perguntas)} perguntas.")
+# Mostrar resultados ao final
+            if  st.session_state.pergunta_atual == len(perguntas):
+                st.write("### Quiz Concluído!")
+                st.write(f"Você acertou {st.session_state.pontuacao} de {len(perguntas)} perguntas.")
 
-        st.write("### Respostas:")
-        for idx, resposta in enumerate(st.session_state.respostas_usuario):
-            st.write(f"**Pergunta {idx + 1}:** {resposta['pergunta']}")
-            st.write(f"- Sua resposta: {resposta['resposta_usuario']}")
-            st.write(f"- Resposta correta: {resposta['resposta_correta']}")
+                st.write("### Respostas:")
+            for idx, resposta in enumerate(st.session_state.respostas_usuario):
+                st.write(f"**Pergunta {idx + 1}:** {resposta['pergunta']}")
+                st.write(f"- Sua resposta: {resposta['resposta_usuario']}")
+                st.write(f"- Resposta correta: {resposta['resposta_correta']}")
 
-        # Reiniciar quiz
-        if st.button("Reiniciar"):
-            st.session_state.pergunta_atual = 0
-            st.session_state.respostas_usuario = []
-            st.session_state.pontuacao = 0
-            st.session_state.feedback = ""  # Resetar feedback
+# Reiniciar quiz
+            if st.button("Reiniciar"):
+                st.session_state.pergunta_atual = 0
+                st.session_state.respostas_usuario = []
+                st.session_state.pontuacao = 0
+                st.session_state.feedback = ""  # Resetar feedback
 
 # Executar o app
-if __name__ == "__main__":
-    app()
+            if __name__ == "__main__":
+                app()
