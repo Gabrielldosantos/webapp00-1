@@ -81,7 +81,7 @@ def app():
                 disciplina_escolhida = st.selectbox("Selecione uma disciplina", list(disciplinas.keys()))
                 perguntas = disciplinas[disciplina_escolhida]
 
-# Inicializar estado de sessão
+           # Inicializar estado de sessão
             if 'pergunta_atual' not in st.session_state:
                 st.session_state.pergunta_atual = 0
                 st.session_state.respostas_usuario = []
