@@ -1,10 +1,13 @@
 import streamlit as st
 
+pergunta_atual = perguntas[st.session_state.pergunta_atual]
+# Destacando a palavra "pergunta" em vermelho
+st.markdown(f"**<span style='color:red;'>Pergunta {st.session_state.pergunta_atual + 1}:</span>** {pergunta_atual['pergunta']}", unsafe_allow_html=True)
+
 # Perguntas organizadas por disciplina
 disciplinas = {
     "Lógica de Programação": [
-        {"pergunta": 
-	 "Qual é o comando usado para exibir algo na tela em Python?", "respostas": ["echo", "printf", "print", "output"], "resposta_correta": "print"},
+        {"pergunta": "Qual é o comando usado para exibir algo na tela em Python?", "respostas": ["echo", "printf", "print", "output"], "resposta_correta": "print"},
         {"pergunta": "Qual desses é um tipo de dado primitivo em Python?", "respostas": ["Lista", "Dicionário", "Inteiro", "Conjunto"], "resposta_correta": "Inteiro"},
         {"pergunta": "Qual é a estrutura de controle que permite repetir um bloco de código várias vezes?", "respostas": ["if", "else", "for", "def"], "resposta_correta": "for"},
         {"pergunta": "O que é uma variável em programação?", "respostas": ["Um tipo de dado", "Uma referência para armazenar dados", "Uma função", "Um comando"], "resposta_correta": "Uma referência para armazenar dados"},  
