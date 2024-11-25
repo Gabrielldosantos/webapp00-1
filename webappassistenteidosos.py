@@ -82,33 +82,11 @@ def app():
                 perguntas = disciplinas[disciplina_escolhida]
 
 # Inicializar estado de sessão
-      if 'pergunta_atual' not in st.session_state:
+     if 'pergunta_atual' not in st.session_state:
     st.session_state.pergunta_atual = 0
     st.session_state.respostas_usuario = []
     st.session_state.pontuacao = 0
     st.session_state.feedback = ""  # Inicializando o feedback como uma string vazia
-
-    
-# Exibir perguntas
-            if st.session_state.pergunta_atual < len(perguntas):
-                pergunta_atual = perguntas[st.session_state.pergunta_atual]
-                st.write(f"**Pergunta {st.session_state.pergunta_atual + 1}:** {pergunta_atual['pergunta']}")
-
-            for opcao in pergunta_atual["respostas"]:
-                if st.button(opcao, key=f"resposta_{st.session_state.pergunta_atual}_{opcao}"):
-# Verificar se a resposta está correta
-            if opcao == pergunta_atual["resposta_correta"]:
-                st.session_state.feedback = "Correto!"
-                st.session_state.pontuacao += 1
-            else:
-                st.session_state.feedback = f"Errado! A resposta correta era: {pergunta_atual['resposta_correta']}"
-                
-                st.session_state.respostas_usuario.append({
-                    "pergunta": pergunta_atual["pergunta"],
-                    "resposta_usuario": opcao,
-                    "resposta_correta": pergunta_atual["resposta_correta"]
-})
-                    st.session_state.pergunta_atual += 1
 
 
 # Mostrar resultados ao final
